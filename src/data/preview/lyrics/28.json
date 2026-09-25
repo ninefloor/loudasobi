@@ -1,0 +1,392 @@
+{
+  "id": 28,
+  "sync": 0.77,
+  "lyric": [
+    {
+      "start": 7.68,
+      "end": 11.97,
+      "jp": "お決まりの今日が 退屈な日々が",
+      "kr": "언제나 그러한 오늘이 지루한 나날들이",
+      "jpReading": "오키마리노 쿄-가 타이쿠츠나 히비가"
+    },
+    {
+      "start": 11.97,
+      "end": 16.64,
+      "jp": "変わり始めた ある日の物語",
+      "kr": "변하기 시작한 어느 날의 이야기",
+      "jpReading": "카와리 하지메타 아루 히노 모노가타리"
+    },
+    {
+      "start": 16.64,
+      "end": 23.86,
+      "jp": "ここからきっと これまでのどんな私よりずっと",
+      "kr": "여기서부터 분명히 지금까지의 어떤 나보다 훨씬",
+      "jpReading": "코코카라 킷토 코레마데노 돈나 와타시요리 즛토"
+    },
+    {
+      "start": 23.86,
+      "end": 27.62,
+      "jp": "私になる new me",
+      "kr": "내가 되는 new me",
+      "jpReading": "와타시니 나루 new me"
+    },
+    {
+      "start": 33.05,
+      "end": 36.34,
+      "jp": "どんどん上手になっていく smile",
+      "kr": "점점 능숙해져 가는 미소",
+      "jpReading": "돈돈 죠-즈니 낫테 이쿠 smile"
+    },
+    {
+      "start": 36.34,
+      "end": 41.7,
+      "jp": "いつも愛想良く day-by-day 擦り減らした",
+      "kr": "언제나 상냥하게 하루하루 닳아버렸어",
+      "jpReading": "이츠모 아이소요쿠 day by day 스리헤라시타"
+    },
+    {
+      "start": 41.7,
+      "end": 44.76,
+      "jp": "本当の自分なんて居ない",
+      "kr": "진정한 자신따위는 없어",
+      "jpReading": "혼토-노 지부은난테 이나이"
+    },
+    {
+      "start": 44.76,
+      "end": 46.81,
+      "jp": "（嘯いた \"I'm feeling good\"）",
+      "kr": "태연하게 \"기분 좋아\"라고 하는 것도",
+      "jpReading": "嘯いた \"I'm feeling good\""
+    },
+    {
+      "start": 46.81,
+      "end": 49.07,
+      "jp": "（嘘付きな \"I'm feeling you\"）",
+      "kr": "\"네게 호감이 있어\"라고 거짓말하는 것도",
+      "jpReading": "嘘付きな \"I'm feeling you\""
+    },
+    {
+      "start": 49.07,
+      "end": 50.43,
+      "jp": "たまらないわ",
+      "kr": "견딜 수가 없어",
+      "jpReading": "たまらないわ"
+    },
+    {
+      "start": 50.43,
+      "end": 52.08,
+      "jp": "Hey, you 恋人は？",
+      "kr": "\"너 애인은 있어?\"",
+      "jpReading": "\"Hey you 코이비토와\""
+    },
+    {
+      "start": 52.08,
+      "end": 54.21,
+      "jp": "出会いとかはどう？ 始まった",
+      "kr": "만남같은건 어때? 또 시작이네",
+      "jpReading": "데아이토카와 도- 하지맛타"
+    },
+    {
+      "start": 54.21,
+      "end": 56.34,
+      "jp": "Bad day (bad things), my boss (oh-oh)",
+      "kr": "재수 없는 날, 나의 상사가",
+      "jpReading": "Bad day (bad things), my boss (oh-oh)"
+    },
+    {
+      "start": 56.34,
+      "end": 59.02,
+      "jp": "嫌いなの話しかけないで",
+      "kr": "싫으니까 말 걸지 말아줬으면",
+      "jpReading": "키라이나노 하나시 카케 나이데"
+    },
+    {
+      "start": 59.02,
+      "end": 61.41,
+      "jp": "不愉快なお節介で決まった",
+      "kr": "불쾌한 참견으로 정해진",
+      "jpReading": "후유카이나 오셋카이데 키맛타"
+    },
+    {
+      "start": 61.41,
+      "end": 62.76,
+      "jp": "憂鬱な約束",
+      "kr": "우울한 약속",
+      "jpReading": "유-우츠나 야쿠소쿠"
+    },
+    {
+      "start": 62.76,
+      "end": 66.26,
+      "jp": "そんな一日が始まる",
+      "kr": "그런 하루가 시작돼",
+      "jpReading": "손나 이치니치가 하지마루"
+    },
+    {
+      "start": 66.26,
+      "end": 70.75,
+      "jp": "待ち合わせは朝の station",
+      "kr": "만남의 장소는 아침의 기차 역",
+      "jpReading": "마치아와세와 아사노 station"
+    },
+    {
+      "start": 70.75,
+      "end": 76.11,
+      "jp": "いつもよりも着飾る but not special",
+      "kr": "평소보다 더 꾸몄지만 특별하지 않아",
+      "jpReading": "이츠모요리모 키카자루 but not special"
+    },
+    {
+      "start": 76.11,
+      "end": 79.97,
+      "jp": "浮き足立つ私の",
+      "kr": "안절부절 못하는 나의",
+      "jpReading": "우키아시타츠 와타시노"
+    },
+    {
+      "start": 79.97,
+      "end": 85.22,
+      "jp": "名前を呼ぶその声に 顔上げた",
+      "kr": "이름을 부르는 그 소리에 얼굴을 들었어",
+      "jpReading": "나마에오 요부 소노 코에니 카오 아게타"
+    },
+    {
+      "start": 85.22,
+      "end": 87.09,
+      "jp": "I've met the unknown",
+      "kr": "난 미지의 존재를 만났어",
+      "jpReading": "I've met the unknown"
+    },
+    {
+      "start": 87.09,
+      "end": 89.23,
+      "jp": "I don't know what you mean at all",
+      "kr": "전혀 이해할 수 없었어",
+      "jpReading": "I don't know what you mean at all"
+    },
+    {
+      "start": 89.23,
+      "end": 91.32,
+      "jp": "Oh, I've met the unknown",
+      "kr": "오, 난 미지의 존재를 만났어",
+      "jpReading": "Oh, I've met the unknown"
+    },
+    {
+      "start": 91.32,
+      "end": 93.87,
+      "jp": "長い前髪の",
+      "kr": "긴 앞머리의",
+      "jpReading": "나가이 마에가미노"
+    },
+    {
+      "start": 93.87,
+      "end": 95.79,
+      "jp": "I've met the unknown",
+      "kr": "오, 난 미지의 존재를 만났어",
+      "jpReading": "I've met the unknown"
+    },
+    {
+      "start": 95.79,
+      "end": 97.9,
+      "jp": "I've met him, he's mysterious",
+      "kr": "난 그를 만났어, 그는 신비로워",
+      "jpReading": "I've met him, he's mysterious"
+    },
+    {
+      "start": 97.9,
+      "end": 105.51,
+      "jp": "まさかの出会いから始まる物語",
+      "kr": "뜻밖의 만남에서부터 시작되는 이야기",
+      "jpReading": "마사카노 데아이카라 하지마루 모노가타리"
+    },
+    {
+      "start": 105.51,
+      "end": 111.32,
+      "jp": "初めましてを交わしてから",
+      "kr": "처음 뵙겠습니다를 나누고 나서",
+      "jpReading": "하지메마시테오 카와시테 카라"
+    },
+    {
+      "start": 111.32,
+      "end": 113.52,
+      "jp": "（あっという間に今）",
+      "kr": "(눈 깜짝할 사이에 지금)",
+      "jpReading": "앗토 유우 마니 이마"
+    },
+    {
+      "start": 113.52,
+      "end": 115.5,
+      "jp": "風切り駆け出した",
+      "kr": "바람을 가르며 달려 나갔어",
+      "jpReading": "카제키리 카케다시타"
+    },
+    {
+      "start": 115.5,
+      "end": 119.89,
+      "jp": "ありきたりな日々を背に二人",
+      "kr": "평범한 나날을 뒤로하고 두 사람은",
+      "jpReading": "아리키타리나 히비오 세니 후타리"
+    },
+    {
+      "start": 119.89,
+      "end": 121.66,
+      "jp": "街を抜ける",
+      "kr": "거리를 빠져나가",
+      "jpReading": "마치오 누케루"
+    },
+    {
+      "start": 121.66,
+      "end": 124.16,
+      "jp": "そう I've met the unknown",
+      "kr": "그래, 난 미지의 존재를 만났어",
+      "jpReading": "소- I've met the unknown"
+    },
+    {
+      "start": 124.16,
+      "end": 126.24,
+      "jp": "I don't know what you mean at all",
+      "kr": "전혀 이해할 수 없었어",
+      "jpReading": "I don't know what you mean at all"
+    },
+    {
+      "start": 126.24,
+      "end": 128.51,
+      "jp": "Oh, I've met the unknown",
+      "kr": "오, 난 미지의 존재를 만났어",
+      "jpReading": "Oh, I've met the unknown"
+    },
+    {
+      "start": 128.51,
+      "end": 130.98,
+      "jp": "ダボついたシャツの",
+      "kr": "헐렁한 셔츠의",
+      "jpReading": "다보츠이타 샤츠노"
+    },
+    {
+      "start": 130.98,
+      "end": 132.92,
+      "jp": "I've met the unknown",
+      "kr": "오, 난 미지의 존재를 만났어",
+      "jpReading": "I've met the unknown"
+    },
+    {
+      "start": 132.92,
+      "end": 135.02,
+      "jp": "Don't know what path, I'd call my own",
+      "kr": "내 길을 뭐라고 불러야 할지 알 수 없어",
+      "jpReading": "Don't know what path, I'd call my own"
+    },
+    {
+      "start": 135.02,
+      "end": 137.85,
+      "jp": "ありえない展開",
+      "kr": "있을 수 없는 전개",
+      "jpReading": "아리에나이 텐카이"
+    },
+    {
+      "start": 137.85,
+      "end": 142.65,
+      "jp": "でも あなたがくれた 驚きに満ちた",
+      "kr": "하지만 당신이 준 놀라움으로 가득 찬",
+      "jpReading": "데모 아나타가 쿠레타 오도로키니 미치타"
+    },
+    {
+      "start": 142.65,
+      "end": 147.32,
+      "jp": "慌ただしい今日が 気付かせてくれた",
+      "kr": "정신없는 오늘이 깨닫게 해줬어",
+      "jpReading": "아와타다시이 쿄-가 키즈카세테 쿠레타"
+    },
+    {
+      "start": 147.32,
+      "end": 153.65,
+      "jp": "私がずっと 本当に嫌いだったのはきっと",
+      "kr": "내가 계속 정말로 싫어했던 것은 분명",
+      "jpReading": "와타시가 즛토 혼토-니 키라이닷타 노와 킷토"
+    },
+    {
+      "start": 153.65,
+      "end": 156.08,
+      "jp": "私自身だった",
+      "kr": "나 자신이었어",
+      "jpReading": "와타시 지신닷타"
+    },
+    {
+      "start": 156.08,
+      "end": 160.23,
+      "jp": "新しい毎日に take off",
+      "kr": "새로운 매일에 날개를 펴",
+      "jpReading": "아타라시이 마이니치니 take off"
+    },
+    {
+      "start": 160.23,
+      "end": 165.86,
+      "jp": "いつもの私ごと 全部壊して oh-oh",
+      "kr": "평소의 나를 전부 부숴버리고",
+      "jpReading": "이츠모노 와타시고토 젠부 코와시테 oh-oh"
+    },
+    {
+      "start": 165.86,
+      "end": 169.35,
+      "jp": "どんな明日が来ようと",
+      "kr": "어떤 내일이 오더라도",
+      "jpReading": "돈나 아스가 코요-토"
+    },
+    {
+      "start": 169.35,
+      "end": 174.69,
+      "jp": "私は私を生きると そう決めたの",
+      "kr": "나는 나 자신으로 살아가겠다고 그렇게 결심했어",
+      "jpReading": "와타시와 와타시오 이키루토 소- 키메타노"
+    },
+    {
+      "start": 174.69,
+      "end": 176.42,
+      "jp": "I've met the unknown",
+      "kr": "난 미지의 존재를 만났어",
+      "jpReading": "I've met the unknown"
+    },
+    {
+      "start": 176.42,
+      "end": 178.66,
+      "jp": "Unlocking doors all of my own",
+      "kr": "내 자신의 문을 열어제끼는",
+      "jpReading": "Unlocking doors all of my own"
+    },
+    {
+      "start": 178.66,
+      "end": 181.97,
+      "jp": "Oh, I'll meet new unknowns, ah",
+      "kr": "오, 난 새로운 것들을 만날 거야",
+      "jpReading": "Oh, I'll meet new unknowns, ah"
+    },
+    {
+      "start": 181.97,
+      "end": 186.35,
+      "jp": "お決まりの今日を 退屈な日々を",
+      "kr": "정해져 있던 오늘을 지루한 나날을",
+      "jpReading": "오키마리노 쿄-오 타이쿠츠나 히비오"
+    },
+    {
+      "start": 186.35,
+      "end": 189.56,
+      "jp": "変えるのは今日だ ah",
+      "kr": "바꾸는 것은 오늘이야",
+      "jpReading": "카에루노와 쿄-다 ah"
+    },
+    {
+      "start": 189.56,
+      "end": 191.7,
+      "jp": "振り返らないで",
+      "kr": "뒤돌아보지 말고",
+      "jpReading": "후리카에라나이데"
+    },
+    {
+      "start": 191.7,
+      "end": 198.87,
+      "jp": "ここから始まる 私の物語",
+      "kr": "여기서부터 시작될 나의 이야기",
+      "jpReading": "코코카라 하지마루 와타시노 모노가타리"
+    }
+  ]
+}
+

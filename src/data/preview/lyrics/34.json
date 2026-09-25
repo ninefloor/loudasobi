@@ -1,0 +1,651 @@
+{
+  "id": 34,
+  "sync": 0.25,
+  "lyric": [
+    {
+      "start": 10.54,
+      "end": 13.1,
+      "jp": "何気ない / あり得ない こと",
+      "kr": "아무렇지 않은 / 있을 수 없는 일",
+      "jpReading": "나니게나이 / 아리에나이 코토"
+    },
+    {
+      "start": 13.1,
+      "end": 15.66,
+      "jp": "くだらない / 譲れない から",
+      "kr": "시시하니까 / 양보할 수 없으니까",
+      "jpReading": "쿠다라나이 / 유즈레나이 카라"
+    },
+    {
+      "start": 15.66,
+      "end": 17.68,
+      "jp": "笑えない 笑えない",
+      "kr": "웃을 수 없어 웃을 수 없어",
+      "jpReading": "와라에나이 와라에나이"
+    },
+    {
+      "start": 17.68,
+      "end": 20.77,
+      "jp": "いつの間に こんなに",
+      "kr": "어느새 이렇게나",
+      "jpReading": "이츠노마니 콘나니"
+    },
+    {
+      "start": 20.77,
+      "end": 23.32,
+      "jp": "変わりたい / 変われない 二人",
+      "kr": "변하고 싶은 / 변할 수 없는 두 사람",
+      "jpReading": "카와리타이 / 카와레나이 후타리"
+    },
+    {
+      "start": 23.32,
+      "end": 25.86,
+      "jp": "分からない / 解らない まま",
+      "kr": "모르겠는 / 알 수 없는 채로",
+      "jpReading": "와카라나이 / 와카라나이 마마"
+    },
+    {
+      "start": 25.86,
+      "end": 27.83,
+      "jp": "すれ違い もつれ合う",
+      "kr": "엇갈리고 뒤엉키는",
+      "jpReading": "스레치가이 모츠레아우"
+    },
+    {
+      "start": 27.83,
+      "end": 29.21,
+      "jp": "二つの恒星",
+      "kr": "두 개의 항성",
+      "jpReading": "후타츠노 코오세이"
+    },
+    {
+      "start": 29.21,
+      "end": 31.25,
+      "jp": "背負った運命",
+      "kr": "짊어진 운명",
+      "jpReading": "세옷타 운메이"
+    },
+    {
+      "start": 31.25,
+      "end": 32.58,
+      "jp": "I don't know 'bout everything",
+      "kr": "난 모든 걸 알지는 못해",
+      "jpReading": "I don't know 'bout everything"
+    },
+    {
+      "start": 32.58,
+      "end": 33.81,
+      "jp": "If you carry guilt or sin",
+      "kr": "네가 죄책감이나 잘못을 짊어졌더라도",
+      "jpReading": "If you carry guilt or sin"
+    },
+    {
+      "start": 33.81,
+      "end": 35.24,
+      "jp": "Resolutions aren't in me",
+      "kr": "그 해답이 나에게 있지는 않아",
+      "jpReading": "Resolutions aren't in me"
+    },
+    {
+      "start": 35.24,
+      "end": 36.39,
+      "jp": "But I can see",
+      "kr": "하지만 보여",
+      "jpReading": "But I can see"
+    },
+    {
+      "start": 36.39,
+      "end": 37.63,
+      "jp": "Ties that bind us won't astray",
+      "kr": "우릴 잇는 끈은 어긋나지 않아",
+      "jpReading": "Ties that bind us won't astray"
+    },
+    {
+      "start": 37.63,
+      "end": 38.95,
+      "jp": "Knowin' deep inside your veins",
+      "kr": "네 핏속 깊은 곳에서 느껴",
+      "jpReading": "Knowin' deep inside your veins"
+    },
+    {
+      "start": 38.95,
+      "end": 40.35,
+      "jp": "Tell me how'd it break away?",
+      "kr": "어떻게 그게 끊어졌는지 말해주지 않을래?",
+      "jpReading": "Tell me how'd it break away?"
+    },
+    {
+      "start": 40.35,
+      "end": 42.14,
+      "jp": "こんな馬鹿らしい未来",
+      "kr": "이런 바보 같은 미래",
+      "jpReading": "콘나 바카라시이 미라이"
+    },
+    {
+      "start": 42.14,
+      "end": 43.58,
+      "jp": "救いはないの？",
+      "kr": "구원은 없는 거야?",
+      "jpReading": "스쿠이와 나이노?"
+    },
+    {
+      "start": 43.58,
+      "end": 45.1,
+      "jp": "残酷な黙示録",
+      "kr": "잔혹한 묵시록",
+      "jpReading": "잔코쿠나 모쿠시로쿠"
+    },
+    {
+      "start": 45.1,
+      "end": 46.09,
+      "jp": "ねえ どうして",
+      "kr": "있잖아 왜",
+      "jpReading": "네에 도오시테"
+    },
+    {
+      "start": 46.09,
+      "end": 48.39,
+      "jp": "こんな結末を",
+      "kr": "이런 결말을",
+      "jpReading": "콘나 케츠마츠오"
+    },
+    {
+      "start": 48.39,
+      "end": 50.55,
+      "jp": "望んでなんかいないよ",
+      "kr": "바라지 않아",
+      "jpReading": "노존데 난카 이나이요"
+    },
+    {
+      "start": 50.55,
+      "end": 51.15,
+      "jp": "知ってる",
+      "kr": "알고 있어",
+      "jpReading": "싯테루"
+    },
+    {
+      "start": 51.15,
+      "end": 52.74,
+      "jp": "私 気付いてた",
+      "kr": "나 알아차리고 있었어",
+      "jpReading": "와타시 키즈이테타"
+    },
+    {
+      "start": 52.74,
+      "end": 54.88,
+      "jp": "夜空に寄り添い並ぶ",
+      "kr": "밤하늘에 나란히 붙어 있는",
+      "jpReading": "요조라니 요리소이 나라부"
+    },
+    {
+      "start": 54.88,
+      "end": 56.46,
+      "jp": "あの星のように",
+      "kr": "저 별처럼",
+      "jpReading": "아노 호시노 요오니"
+    },
+    {
+      "start": 56.46,
+      "end": 57.94,
+      "jp": "きっときっと",
+      "kr": "분명 분명",
+      "jpReading": "킷토킷토"
+    },
+    {
+      "start": 57.94,
+      "end": 58.98,
+      "jp": "本当は二人",
+      "kr": "사실은 두 사람",
+      "jpReading": "혼토오와 후타리"
+    },
+    {
+      "start": 58.98,
+      "end": 60.32,
+      "jp": "ずっとずっと",
+      "kr": "계속 계속",
+      "jpReading": "즛토즛토"
+    },
+    {
+      "start": 60.32,
+      "end": 61.72,
+      "jp": "想い合っていたのに",
+      "kr": "서로를 생각하고 있었는데",
+      "jpReading": "오모이앗테이타노니"
+    },
+    {
+      "start": 61.72,
+      "end": 63.6,
+      "jp": "どれだけ時が過ぎても",
+      "kr": "아무리 시간이 흘러도",
+      "jpReading": "도레다케 토키가 스기테모"
+    },
+    {
+      "start": 63.6,
+      "end": 66.07,
+      "jp": "たとえ どれだけ離れていても",
+      "kr": "설령 얼마나 멀리 떨어져 있더라도",
+      "jpReading": "타토에 도레다케 하나레테이테모"
+    },
+    {
+      "start": 66.07,
+      "end": 68.64,
+      "jp": "君と生きたあの日々は今でも",
+      "kr": "너와 함께 지냈던 그 날들은 지금도",
+      "jpReading": "키미토 이키타 아노 히비와 이마데모"
+    },
+    {
+      "start": 68.64,
+      "end": 71.25,
+      "jp": "遥か先の星のようにキラキラ",
+      "kr": "아득히 먼 별처럼 반짝반짝",
+      "jpReading": "하루카 사키노 호시노 요오니 키라키라"
+    },
+    {
+      "start": 71.25,
+      "end": 73.81,
+      "jp": "私 もう涙見せないから",
+      "kr": "나 이제 눈물 보이지 않을 테니까",
+      "jpReading": "와타시 모오 나미다 미세나이카라"
+    },
+    {
+      "start": 73.81,
+      "end": 76.35,
+      "jp": "私 誰より強くなるから",
+      "kr": "나 누구보다 강해질 테니까",
+      "jpReading": "와타시 다레요리 츠요쿠 나루카라"
+    },
+    {
+      "start": 76.35,
+      "end": 78.88,
+      "jp": "いつか 晴れた空の下で ほら",
+      "kr": "언젠가 맑게 갠 하늘 아래서 자,",
+      "jpReading": "이츠카 하레타 소라노 시타데 호라"
+    },
+    {
+      "start": 78.88,
+      "end": 81.89,
+      "jp": "また一緒に笑い合いたいから",
+      "kr": "다시 함께 웃고 싶으니까",
+      "jpReading": "마타 잇쇼니 와라이아이타이카라"
+    },
+    {
+      "start": 81.89,
+      "end": 84.16,
+      "jp": "ねえ君は覚えている？",
+      "kr": "있잖아 너는 기억하고 있어?",
+      "jpReading": "네에 키미와 오보에테이루?"
+    },
+    {
+      "start": 84.16,
+      "end": 87.39,
+      "jp": "幼い頃の泣き虫だった",
+      "kr": "어렸을 적 울보였던",
+      "jpReading": "오사나이 코로노 나키무시닷타"
+    },
+    {
+      "start": 87.39,
+      "end": 89.95,
+      "jp": "私のこと ぎゅっと",
+      "kr": "나를 꼭",
+      "jpReading": "와타시노 코토 귯토"
+    },
+    {
+      "start": 89.95,
+      "end": 92.14,
+      "jp": "抱きしめてくれたこと",
+      "kr": "안아 줬던 것",
+      "jpReading": "다키시메테 쿠레타 코토"
+    },
+    {
+      "start": 92.14,
+      "end": 94.42,
+      "jp": "ねえ君は覚えている？",
+      "kr": "있잖아 너는 기억하고 있어?",
+      "jpReading": "네에 키미와 오보에테이루?"
+    },
+    {
+      "start": 94.42,
+      "end": 97.59,
+      "jp": "いつか離れ離れになったって",
+      "kr": "언젠가 뿔뿔이 흩어진다 해도",
+      "jpReading": "이츠카 하나레바나레니 낫탓테"
+    },
+    {
+      "start": 97.59,
+      "end": 99.48,
+      "jp": "必ず帰ってくるって",
+      "kr": "반드시 돌아오겠다고",
+      "jpReading": "카나라즈 카엣테 쿠룻테"
+    },
+    {
+      "start": 99.48,
+      "end": 102.64,
+      "jp": "言ってくれたこと",
+      "kr": "말해 줬던 것",
+      "jpReading": "잇테 쿠레타 코토"
+    },
+    {
+      "start": 102.64,
+      "end": 103.92,
+      "jp": "I don't know 'bout everything",
+      "kr": "난 모든 걸 알지는 못해",
+      "jpReading": "I don't know 'bout everything"
+    },
+    {
+      "start": 103.92,
+      "end": 105.25,
+      "jp": "If you carry guilt or sin",
+      "kr": "네가 죄책감이나 잘못을 짊어졌더라도",
+      "jpReading": "If you carry guilt or sin"
+    },
+    {
+      "start": 105.25,
+      "end": 106.69,
+      "jp": "Resolutions aren't in me",
+      "kr": "나에겐 해답이 없어",
+      "jpReading": "Resolutions aren't in me"
+    },
+    {
+      "start": 106.69,
+      "end": 107.77,
+      "jp": "But I can see",
+      "kr": "하지만 보여",
+      "jpReading": "But I can see"
+    },
+    {
+      "start": 107.77,
+      "end": 109.03,
+      "jp": "Ties that bind us won't astray",
+      "kr": "우릴 잇는 끈은 어긋나지 않아",
+      "jpReading": "Ties that bind us won't astray"
+    },
+    {
+      "start": 109.03,
+      "end": 110.27,
+      "jp": "Knowin' deep inside your veins",
+      "kr": "네 핏속 깊은 곳에서 느껴",
+      "jpReading": "Knowin' deep inside your veins"
+    },
+    {
+      "start": 110.27,
+      "end": 111.69,
+      "jp": "Tell me how'd it break away?",
+      "kr": "어떻게 그게 끊어졌는지 말해줘",
+      "jpReading": "Tell me how'd it break away?"
+    },
+    {
+      "start": 111.69,
+      "end": 112.92,
+      "jp": "Still, I could say...",
+      "kr": "그래도, 난 말할 수 있어...",
+      "jpReading": "Still, I could say..."
+    },
+    {
+      "start": 112.92,
+      "end": 114.13,
+      "jp": "We don't know 'bout everything",
+      "kr": "우린 모든 걸 알지는 못해",
+      "jpReading": "We don't know 'bout everything"
+    },
+    {
+      "start": 114.13,
+      "end": 115.41,
+      "jp": "We differ in how we think",
+      "kr": "우린 생각하는 방식이 달라",
+      "jpReading": "We differ in how we think"
+    },
+    {
+      "start": 115.41,
+      "end": 116.88,
+      "jp": "Somethin' that'll always be",
+      "kr": "언제까지나 변치 않을 무언가",
+      "jpReading": "Somethin' that'll always be"
+    },
+    {
+      "start": 116.88,
+      "end": 118.02,
+      "jp": "Remember these",
+      "kr": "이걸 기억해",
+      "jpReading": "Remember these"
+    },
+    {
+      "start": 118.02,
+      "end": 119.24,
+      "jp": "Ties that bind us won't astray",
+      "kr": "우릴 잇는 끈은 어긋나지 않아",
+      "jpReading": "Ties that bind us won't astray"
+    },
+    {
+      "start": 119.24,
+      "end": 120.47,
+      "jp": "Isolation, no, we gleam",
+      "kr": "고립이 아니야, 우린 함께 빛나",
+      "jpReading": "Isolation, no, we gleam"
+    },
+    {
+      "start": 120.47,
+      "end": 122.14,
+      "jp": "Constellation, like a dream",
+      "kr": "별자리처럼, 꿈처럼",
+      "jpReading": "Constellation, like a dream"
+    },
+    {
+      "start": 122.14,
+      "end": 132.39,
+      "jp": "...with you and me",
+      "kr": "...너와 나로",
+      "jpReading": "...with you and me"
+    },
+    {
+      "start": 132.39,
+      "end": 135.52,
+      "jp": "一人 背負い続けてきたんだよね",
+      "kr": "혼자서 계속 짊어져 온거지",
+      "jpReading": "히토리 세오이츠즈케테 키탄다요네"
+    },
+    {
+      "start": 135.52,
+      "end": 137.04,
+      "jp": "どんな時も",
+      "kr": "어느때에도",
+      "jpReading": "돈나 토키모"
+    },
+    {
+      "start": 137.04,
+      "end": 138.52,
+      "jp": "ねえ 忘れないで",
+      "kr": "있잖아 잊지 말아줘",
+      "jpReading": "네에 와스레나이데"
+    },
+    {
+      "start": 138.52,
+      "end": 139.6,
+      "jp": "どこに居ても",
+      "kr": "어디에 있더라도",
+      "jpReading": "도코니 이테모"
+    },
+    {
+      "start": 139.6,
+      "end": 142.57,
+      "jp": "君のことを想う人がいること",
+      "kr": "너를 생각하는 사람이 있다는 걸",
+      "jpReading": "키미노 코토오 오모우 히토가 이루 코토"
+    },
+    {
+      "start": 142.57,
+      "end": 145.22,
+      "jp": "明日が見えないほどの闇夜に",
+      "kr": "내일이 보이지 않을 만큼 어두운 밤에",
+      "jpReading": "아스가 미에나이 호도노 야미요니"
+    },
+    {
+      "start": 145.22,
+      "end": 147.13,
+      "jp": "迷い込んでしまっても",
+      "kr": "길을 잃고 헤매게 되더라도",
+      "jpReading": "마요이콘데 시맛테모"
+    },
+    {
+      "start": 147.13,
+      "end": 148.83,
+      "jp": "ほらね 必ず",
+      "kr": "봐봐, 반드시",
+      "jpReading": "호라네 카나라즈"
+    },
+    {
+      "start": 148.83,
+      "end": 152.26,
+      "jp": "見つけ出すから",
+      "kr": "찾아낼 테니까",
+      "jpReading": "미츠케다스카라"
+    },
+    {
+      "start": 152.26,
+      "end": 153.45,
+      "jp": "一人じゃないよ",
+      "kr": "혼자가 아니야",
+      "jpReading": "히토리쟈나이요"
+    },
+    {
+      "start": 153.45,
+      "end": 155.51,
+      "jp": "強く結んだ一直線",
+      "kr": "강하게 맺어진 일직선",
+      "jpReading": "츠요쿠 무슨다 잇쵸쿠센"
+    },
+    {
+      "start": 155.51,
+      "end": 157.29,
+      "jp": "飛び出した包囲網",
+      "kr": "뚫고 나온 포위망",
+      "jpReading": "토비다시타 호오이모오"
+    },
+    {
+      "start": 157.29,
+      "end": 159.48,
+      "jp": "そう 何度離れても",
+      "kr": "그래 몇 번을 떨어져도",
+      "jpReading": "소오 난도 하나레테모"
+    },
+    {
+      "start": 159.48,
+      "end": 161.83,
+      "jp": "また此処で会えると",
+      "kr": "다시 이곳에서 만날 수 있다고",
+      "jpReading": "마타 코코데 아에루토"
+    },
+    {
+      "start": 161.83,
+      "end": 163.04,
+      "jp": "信じていたよ",
+      "kr": "믿고 있었어",
+      "jpReading": "신지테이타요"
+    },
+    {
+      "start": 163.04,
+      "end": 165.89,
+      "jp": "この街を覆ったあの雲を",
+      "kr": "이 거리를 뒤덮은 저 먹구름을",
+      "jpReading": "코노 마치오 오옷타 아노 쿠모오"
+    },
+    {
+      "start": 165.89,
+      "end": 167.47,
+      "jp": "一緒に穿つんだ",
+      "kr": "함께 뚫어내는 거야",
+      "jpReading": "잇쇼니 우가츤다"
+    },
+    {
+      "start": 167.47,
+      "end": 168.67,
+      "jp": "ねえ いつの日か",
+      "kr": "있잖아 언젠가는",
+      "jpReading": "네에 이츠노 히카"
+    },
+    {
+      "start": 168.67,
+      "end": 170.08,
+      "jp": "きっときっと",
+      "kr": "분명 분명",
+      "jpReading": "킷토킷토"
+    },
+    {
+      "start": 170.08,
+      "end": 171.19,
+      "jp": "寄り添い並ぶ",
+      "kr": "나란히 붙어 서는",
+      "jpReading": "요리소이 나라부"
+    },
+    {
+      "start": 171.19,
+      "end": 174.04,
+      "jp": "あの星のように",
+      "kr": "저 별처럼",
+      "jpReading": "아노 호시노 요오니"
+    },
+    {
+      "start": 174.04,
+      "end": 175.84,
+      "jp": "どれだけ時が過ぎても",
+      "kr": "아무리 시간이 흘러도",
+      "jpReading": "도레다케 토키가 스기테모"
+    },
+    {
+      "start": 175.84,
+      "end": 178.45,
+      "jp": "たとえ どれだけ離れていても",
+      "kr": "설령 얼마나 멀리 떨어져 있더라도",
+      "jpReading": "타토에 도레다케 하나레테이테모"
+    },
+    {
+      "start": 178.45,
+      "end": 181.06,
+      "jp": "君は 一人きりじゃないんだよ",
+      "kr": "너는 혼자가 아니야",
+      "jpReading": "키미와 히토리키리쟈나인다요"
+    },
+    {
+      "start": 181.06,
+      "end": 183.61,
+      "jp": "かざす指先でほら なぞれば",
+      "kr": "치켜든 손끝으로 봐 따라 그리면",
+      "jpReading": "카자스 유비사키데 호라 나조레바"
+    },
+    {
+      "start": 183.61,
+      "end": 186.16,
+      "jp": "私 もう涙見せないから",
+      "kr": "나 이제 눈물 보이지 않을 테니까",
+      "jpReading": "와타시 모오 나미다 미세나이카라"
+    },
+    {
+      "start": 186.16,
+      "end": 188.72,
+      "jp": "私 誰より強くなるから",
+      "kr": "나 누구보다 강해질 테니까",
+      "jpReading": "와타시 다레요리 츠요쿠 나루카라"
+    },
+    {
+      "start": 188.72,
+      "end": 191.25,
+      "jp": "いつかこの空が晴れた日には",
+      "kr": "언젠가 이 하늘이 맑게 갠 날에는",
+      "jpReading": "이츠카 코노 소라가 하레타 히니와"
+    },
+    {
+      "start": 191.25,
+      "end": 193.3,
+      "jp": "また一緒に笑い合える",
+      "kr": "다시 함께 웃을 수 있어",
+      "jpReading": "마타 잇쇼니 와라이아에루"
+    },
+    {
+      "start": 193.3,
+      "end": 197.3,
+      "jp": "そう信じてる",
+      "kr": "그렇게 믿고 있어",
+      "jpReading": "소오 신지테루"
+    }
+  ]
+}
+

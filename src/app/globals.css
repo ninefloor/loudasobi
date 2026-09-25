@@ -1,0 +1,468 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp-dynamic-subset.min.css");
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Brand palette utilities: bg-magenta-500, text-cyan-700, ... */
+  --color-magenta-100: var(--magenta-100);
+  --color-magenta-200: var(--magenta-200);
+  --color-magenta-300: var(--magenta-300);
+  --color-magenta-400: var(--magenta-400);
+  --color-magenta-500: var(--magenta-500);
+  --color-magenta-600: var(--magenta-600);
+  --color-magenta-700: var(--magenta-700);
+  --color-magenta-800: var(--magenta-800);
+  --color-magenta-900: var(--magenta-900);
+  --color-magenta: var(--magenta-500);
+  --color-cyan-100: var(--cyan-100);
+  --color-cyan-200: var(--cyan-200);
+  --color-cyan-300: var(--cyan-300);
+  --color-cyan-400: var(--cyan-400);
+  --color-cyan-500: var(--cyan-500);
+  --color-cyan-600: var(--cyan-600);
+  --color-cyan-700: var(--cyan-700);
+  --color-cyan-800: var(--cyan-800);
+  --color-cyan-900: var(--cyan-900);
+  --color-cyan: var(--cyan-500);
+  --color-navy-100: var(--navy-100);
+  --color-navy-200: var(--navy-200);
+  --color-navy-300: var(--navy-300);
+  --color-navy-400: var(--navy-400);
+  --color-navy-500: var(--navy-500);
+  --color-navy-600: var(--navy-600);
+  --color-navy-700: var(--navy-700);
+  --color-navy-800: var(--navy-800);
+  --color-navy-900: var(--navy-900);
+  --color-navy: var(--navy-500);
+  --color-black-100: var(--black-100);
+  --color-black-200: var(--black-200);
+  --color-black-300: var(--black-300);
+  --color-black-400: var(--black-400);
+  --color-black-500: var(--black-500);
+  --color-black-600: var(--black-600);
+  --color-black-700: var(--black-700);
+  --color-black-800: var(--black-800);
+  --color-black-900: var(--black-900);
+  --color-black: var(--black-500);
+  --color-white-100: var(--white-100);
+  --color-white-200: var(--white-200);
+  --color-white-300: var(--white-300);
+  --color-white-400: var(--white-400);
+  --color-white-500: var(--white-500);
+  --color-white-600: var(--white-600);
+  --color-white-700: var(--white-700);
+  --color-white-800: var(--white-800);
+  --color-white-900: var(--white-900);
+  --color-white: var(--white-500);
+  --color-charcoal-100: var(--charcoal-100);
+  --color-charcoal-200: var(--charcoal-200);
+  --color-charcoal-300: var(--charcoal-300);
+  --color-charcoal-400: var(--charcoal-400);
+  --color-charcoal-500: var(--charcoal-500);
+  --color-charcoal-600: var(--charcoal-600);
+  --color-charcoal-700: var(--charcoal-700);
+  --color-charcoal-800: var(--charcoal-800);
+  --color-charcoal-900: var(--charcoal-900);
+  --color-charcoal: var(--charcoal-500);
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+  --color-gray: var(--gray-500);
+  --color-yellow-100: var(--yellow-100);
+  --color-yellow-200: var(--yellow-200);
+  --color-yellow-300: var(--yellow-300);
+  --color-yellow-400: var(--yellow-400);
+  --color-yellow-500: var(--yellow-500);
+  --color-yellow-600: var(--yellow-600);
+  --color-yellow-700: var(--yellow-700);
+  --color-yellow-800: var(--yellow-800);
+  --color-yellow-900: var(--yellow-900);
+  --color-yellow: var(--yellow-500);
+  --color-green-100: var(--green-100);
+  --color-green-200: var(--green-200);
+  --color-green-300: var(--green-300);
+  --color-green-400: var(--green-400);
+  --color-green-500: var(--green-500);
+  --color-green-600: var(--green-600);
+  --color-green-700: var(--green-700);
+  --color-green-800: var(--green-800);
+  --color-green-900: var(--green-900);
+  --color-green: var(--green-500);
+  --color-orange-100: var(--orange-100);
+  --color-orange-200: var(--orange-200);
+  --color-orange-300: var(--orange-300);
+  --color-orange-400: var(--orange-400);
+  --color-orange-500: var(--orange-500);
+  --color-orange-600: var(--orange-600);
+  --color-orange-700: var(--orange-700);
+  --color-orange-800: var(--orange-800);
+  --color-orange-900: var(--orange-900);
+  --color-orange: var(--orange-500);
+  --color-purple-100: var(--purple-100);
+  --color-purple-200: var(--purple-200);
+  --color-purple-300: var(--purple-300);
+  --color-purple-400: var(--purple-400);
+  --color-purple-500: var(--purple-500);
+  --color-purple-600: var(--purple-600);
+  --color-purple-700: var(--purple-700);
+  --color-purple-800: var(--purple-800);
+  --color-purple-900: var(--purple-900);
+  --color-purple: var(--purple-500);
+  --color-lilas-blue-100: var(--lilas-blue-100);
+  --color-lilas-blue-200: var(--lilas-blue-200);
+  --color-lilas-blue-300: var(--lilas-blue-300);
+  --color-lilas-blue-400: var(--lilas-blue-400);
+  --color-lilas-blue-500: var(--lilas-blue-500);
+  --color-lilas-blue-600: var(--lilas-blue-600);
+  --color-lilas-blue-700: var(--lilas-blue-700);
+  --color-lilas-blue-800: var(--lilas-blue-800);
+  --color-lilas-blue-900: var(--lilas-blue-900);
+  --color-lilas-blue: var(--lilas-blue-500);
+  --color-ayase-green-100: var(--ayase-green-100);
+  --color-ayase-green-200: var(--ayase-green-200);
+  --color-ayase-green-300: var(--ayase-green-300);
+  --color-ayase-green-400: var(--ayase-green-400);
+  --color-ayase-green-500: var(--ayase-green-500);
+  --color-ayase-green-600: var(--ayase-green-600);
+  --color-ayase-green-700: var(--ayase-green-700);
+  --color-ayase-green-800: var(--ayase-green-800);
+  --color-ayase-green-900: var(--ayase-green-900);
+  --color-ayase-green: var(--ayase-green-500);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans:
+    "Pretendard JP Variable", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * 고정 브랜드 팔레트: 500은 제공된 sRGB 원본의 OKLCH 변환값.
+ * 100–400: OKLab에서 흰색과 92/78/58/30% 혼합.
+ * 600–900: L과 C를 원본의 88/72/56/40%로 감소.
+ * 색상각을 유지하고 sRGB 색역 밖에서는 chroma만 줄입니다.
+ * black/white 등 무채색도 원본을 500에 보존하므로 스케일별 밝기 간격은 다릅니다.
+ * 팔레트는 모드에 따라 바뀌지 않으며 아래 semantic token만 전환됩니다.
+ */
+:root {
+  /* magenta: 원본 RGB 242, 40, 90 = 500 */
+  --magenta-100: oklch(0.97000136 0.01477917 14.617492);
+  --magenta-200: oklch(0.91750373 0.04256574 14.617492);
+  --magenta-300: oklch(0.84250712 0.08727726 14.617492);
+  --magenta-400: oklch(0.73751187 0.16140353 14.617492);
+  --magenta-500: oklch(0.62501695 0.23057647 14.617492);
+  --magenta-600: oklch(0.55001492 0.2029073 14.617492);
+  --magenta-700: oklch(0.45001221 0.16601506 14.617492);
+  --magenta-800: oklch(0.35000949 0.12912283 14.617492);
+  --magenta-900: oklch(0.25000678 0.09223059 14.617492);
+  --y-a-s-b--magenta: var(--magenta-500);
+
+  /* cyan: 원본 RGB 1, 172, 198 = 500 */
+  --cyan-100: oklch(0.97473779 0.00958953 213.495132);
+  --cyan-200: oklch(0.93052893 0.0263712 213.495132);
+  --cyan-300: oklch(0.86737342 0.05034502 213.495132);
+  --cyan-400: oklch(0.7789557 0.08390837 213.495132);
+  --cyan-500: oklch(0.68422242 0.11986911 213.495132);
+  --cyan-600: oklch(0.60211573 0.10548481 213.495132);
+  --cyan-700: oklch(0.49264014 0.08630576 213.495132);
+  --cyan-800: oklch(0.38316456 0.0671267 213.495132);
+  --cyan-900: oklch(0.27368897 0.04794764 213.495132);
+  --y-a-s-b--cyan: var(--cyan-500);
+
+  /* navy: 원본 RGB 2, 61, 151 = 500 */
+  --navy-100: oklch(0.95116616 0.01261511 260.172494);
+  --navy-200: oklch(0.86570695 0.03469155 260.172494);
+  --navy-300: oklch(0.74362236 0.06622933 260.172494);
+  --navy-400: oklch(0.57270393 0.11038221 260.172494);
+  --navy-500: oklch(0.38957704 0.15768888 260.172494);
+  --navy-600: oklch(0.3428278 0.13876621 260.172494);
+  --navy-700: oklch(0.28049547 0.11353599 260.172494);
+  --navy-800: oklch(0.21816314 0.08830577 260.172494);
+  --navy-900: oklch(0.15583082 0.06307555 260.172494);
+  --w-a-n-d-a-r-a--navy: var(--navy-500);
+
+  /* black: 원본 RGB 10, 10, 10 = 500 */
+  --black-100: oklch(0.93158304 0 0);
+  --black-200: oklch(0.81185335 0 0);
+  --black-300: oklch(0.64081094 0 0);
+  --black-400: oklch(0.40135157 0 0);
+  --black-500: oklch(0.14478795 0 0);
+  --black-600: oklch(0.1274134 0 0);
+  --black-700: oklch(0.10424733 0 0);
+  --black-800: oklch(0.08108125 0 0);
+  --black-900: oklch(0.05791518 0 0);
+  --b-a-s-i-c--black: var(--black-500);
+
+  /* white: 원본 RGB 250, 250, 250 = 500 */
+  --white-100: oklch(0.99880829 0 0);
+  --white-200: oklch(0.9967228 0 0);
+  --white-300: oklch(0.99374353 0 0);
+  --white-400: oklch(0.98957255 0 0);
+  --white-500: oklch(0.98510365 0 0);
+  --white-600: oklch(0.86689121 0 0);
+  --white-700: oklch(0.70927462 0 0);
+  --white-800: oklch(0.55165804 0 0);
+  --white-900: oklch(0.39404146 0 0);
+  --b-a-s-i-c--white: var(--white-500);
+
+  /* charcoal: 원본 RGB 102, 102, 102 = 500 */
+  --charcoal-100: oklch(0.96082227 0 0);
+  --charcoal-200: oklch(0.89226124 0 0);
+  --charcoal-300: oklch(0.79431691 0 0);
+  --charcoal-400: oklch(0.65719485 0 0);
+  --charcoal-500: oklch(0.51027835 0 0);
+  --charcoal-600: oklch(0.44904495 0 0);
+  --charcoal-700: oklch(0.36740042 0 0);
+  --charcoal-800: oklch(0.28575588 0 0);
+  --charcoal-900: oklch(0.20411134 0 0);
+  --b-a-s-i-c--charcoal: var(--charcoal-500);
+
+  /* gray: 원본 RGB 200, 200, 200 = 500 */
+  --gray-100: oklch(0.9866235 0 0);
+  --gray-200: oklch(0.96321464 0 0);
+  --gray-300: oklch(0.9297734 0 0);
+  --gray-400: oklch(0.88295567 0 0);
+  --gray-500: oklch(0.83279381 0 0);
+  --gray-600: oklch(0.73285855 0 0);
+  --gray-700: oklch(0.59961154 0 0);
+  --gray-800: oklch(0.46636453 0 0);
+  --gray-900: oklch(0.33311752 0 0);
+  --y-o-a-s--gray: var(--gray-500);
+
+  /* yellow: 원본 RGB 255, 190, 38 = 500 */
+  --yellow-100: oklch(0.98714018 0.01231823 82.19308);
+  --yellow-200: oklch(0.96463551 0.03419511 82.19308);
+  --yellow-300: oklch(0.93248597 0.06620309 82.19308);
+  --yellow-400: oklch(0.88747661 0.11267081 82.19308);
+  --yellow-500: oklch(0.8392523 0.16492658 82.19308);
+  --yellow-600: oklch(0.73854203 0.14513539 82.19308);
+  --yellow-700: oklch(0.60426166 0.11874714 82.19308);
+  --yellow-800: oklch(0.46998129 0.09235888 82.19308);
+  --yellow-900: oklch(0.33570092 0.06597063 82.19308);
+  --p-o-p-o-u-t--yellow: var(--yellow-500);
+
+  /* green: 원본 RGB 3, 191, 157 = 500 */
+  --green-100: oklch(0.97743106 0.01092025 173.767234);
+  --green-200: oklch(0.9379354 0.0300307 173.767234);
+  --green-300: oklch(0.88151304 0.05733133 173.767234);
+  --green-400: oklch(0.80252174 0.09555222 173.767234);
+  --green-500: oklch(0.7178882 0.13650318 173.767234);
+  --green-600: oklch(0.63174161 0.1201228 173.767234);
+  --green-700: oklch(0.5168795 0.09828229 173.767234);
+  --green-800: oklch(0.40201739 0.07644178 173.767234);
+  --green-900: oklch(0.28715528 0.05460127 173.767234);
+  --n-t-m-y--green: var(--green-500);
+
+  /* orange: 원본 RGB 245, 101, 30 = 500 */
+  --orange-100: oklch(0.97441506 0.01322692 42.197941);
+  --orange-200: oklch(0.92964143 0.03770336 42.197941);
+  --orange-300: oklch(0.86567909 0.0760107 42.197941);
+  --orange-400: oklch(0.77613182 0.13460829 42.197941);
+  --orange-500: oklch(0.68018831 0.19229755 42.197941);
+  --orange-600: oklch(0.59856571 0.16922185 42.197941);
+  --orange-700: oklch(0.48973558 0.13845424 42.197941);
+  --orange-800: oklch(0.38090545 0.10768663 42.197941);
+  --orange-900: oklch(0.27207532 0.07691902 42.197941);
+  --j-g-s-h--orange: var(--orange-500);
+
+  /* purple: 원본 RGB 114, 80, 161 = 500 */
+  --purple-100: oklch(0.9603778 0.01023391 301.344131);
+  --purple-200: oklch(0.89103896 0.02814325 301.344131);
+  --purple-300: oklch(0.79198346 0.05372803 301.344131);
+  --purple-400: oklch(0.65330577 0.08954672 301.344131);
+  --purple-500: oklch(0.50472253 0.12792389 301.344131);
+  --purple-600: oklch(0.44415582 0.11257302 301.344131);
+  --purple-700: oklch(0.36340022 0.0921052 301.344131);
+  --purple-800: oklch(0.28264461 0.07163738 301.344131);
+  --purple-900: oklch(0.20188901 0.05116955 301.344131);
+  --s-u-r-r-e-a-l-i-s-m--purple: var(--purple-500);
+
+  /* lilas-blue: 원본 RGB 50, 58, 98 = 500 */
+  --lilas-blue-100: oklch(0.9488929 0.00559805 273.829927);
+  --lilas-blue-200: oklch(0.85945549 0.01539464 273.829927);
+  --lilas-blue-300: oklch(0.73168775 0.02938977 273.829927);
+  --lilas-blue-400: oklch(0.55281292 0.04898294 273.829927);
+  --lilas-blue-500: oklch(0.36116131 0.06997564 273.829927);
+  --lilas-blue-600: oklch(0.31782195 0.06157856 273.829927);
+  --lilas-blue-700: oklch(0.26003614 0.05038246 273.829927);
+  --lilas-blue-800: oklch(0.20225033 0.03918636 273.829927);
+  --lilas-blue-900: oklch(0.14446452 0.02799025 273.829927);
+  --lilas--blue: var(--lilas-blue-500);
+
+  /* ayase-green: 원본 RGB 4, 58, 64 = 500 */
+  --ayase-green-100: oklch(0.94554302 0.00420038 206.651972);
+  --ayase-green-200: oklch(0.85024331 0.01155104 206.651972);
+  --ayase-green-300: oklch(0.71410087 0.02205198 206.651972);
+  --ayase-green-400: oklch(0.52350144 0.03675329 206.651972);
+  --ayase-green-500: oklch(0.31928778 0.05250471 206.651972);
+  --ayase-green-600: oklch(0.28097324 0.04620414 206.651972);
+  --ayase-green-700: oklch(0.2298872 0.03780339 206.651972);
+  --ayase-green-800: oklch(0.17880115 0.02940264 206.651972);
+  --ayase-green-900: oklch(0.12771511 0.02100188 206.651972);
+  --ayase--green: var(--ayase-green-500);
+}
+
+/* Light: primary는 흰색 본문 대비를 위해 magenta-600 사용. */
+:root {
+  --background: var(--white-500);
+  --foreground: var(--black-500);
+  --card: var(--white-100);
+  --card-foreground: var(--black-500);
+  --popover: var(--white-100);
+  --popover-foreground: var(--black-500);
+  --primary: var(--magenta-600);
+  --primary-foreground: var(--white-500);
+  --secondary: var(--cyan-500);
+  --secondary-foreground: var(--black-500);
+  --muted: var(--gray-100);
+  --muted-foreground: var(--charcoal-600);
+  --accent: var(--magenta-100);
+  --accent-foreground: var(--magenta-700);
+  --destructive: var(--magenta-600);
+  --border: var(--gray-200);
+  --input: var(--gray-300);
+  --ring: var(--magenta-500);
+  --chart-1: var(--magenta-500);
+  --chart-2: var(--cyan-500);
+  --chart-3: var(--yellow-500);
+  --chart-4: var(--green-500);
+  --chart-5: var(--purple-500);
+  --sidebar: var(--white-500);
+  --sidebar-foreground: var(--black-500);
+  --sidebar-primary: var(--magenta-600);
+  --sidebar-primary-foreground: var(--white-500);
+  --sidebar-accent: var(--magenta-100);
+  --sidebar-accent-foreground: var(--magenta-700);
+  --sidebar-border: var(--gray-200);
+  --sidebar-ring: var(--magenta-500);
+  --radius: 0.375rem;
+  --motion-fast: 120ms;
+  --motion-panel: 180ms;
+  --motion-lyric: 200ms;
+}
+
+.dark {
+  --background: var(--black-500);
+  --foreground: var(--white-500);
+  --card: var(--charcoal-800);
+  --card-foreground: var(--white-500);
+  --popover: var(--charcoal-800);
+  --popover-foreground: var(--white-500);
+  --primary: var(--magenta-400);
+  --primary-foreground: var(--black-500);
+  --secondary: var(--cyan-400);
+  --secondary-foreground: var(--black-500);
+  --muted: var(--charcoal-800);
+  --muted-foreground: var(--gray-500);
+  --accent: var(--magenta-900);
+  --accent-foreground: var(--magenta-200);
+  --destructive: var(--magenta-400);
+  --border: var(--charcoal-700);
+  --input: var(--charcoal-600);
+  --ring: var(--magenta-400);
+  --chart-1: var(--magenta-500);
+  --chart-2: var(--cyan-500);
+  --chart-3: var(--yellow-500);
+  --chart-4: var(--green-500);
+  --chart-5: var(--purple-500);
+  --sidebar: var(--charcoal-900);
+  --sidebar-foreground: var(--white-500);
+  --sidebar-primary: var(--magenta-400);
+  --sidebar-primary-foreground: var(--black-500);
+  --sidebar-accent: var(--magenta-900);
+  --sidebar-accent-foreground: var(--magenta-200);
+  --sidebar-border: var(--charcoal-700);
+  --sidebar-ring: var(--magenta-400);
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+.song-sheet[data-side="left"] {
+  top: 56px;
+  bottom: 0;
+  height: calc(100dvh - 56px);
+  width: min(360px, 100vw);
+  max-width: 360px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
