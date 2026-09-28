@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import { getAdminSession } from "@/server/auth/access";
 import { getAdminConnectionStatus } from "@/server/queries/admin";
+import { getAdminMusics } from "@/server/queries/music";
+import type { Metadata } from "next";
+import Link from "next/link";
 import { AdminAuthForm } from "./_components/AdminAuthForm";
 import { AdminMusicManager } from "./_components/AdminMusicManager";
-import { getAdminMusics } from "@/server/queries/music";
 
 export const metadata: Metadata = {
   title: "관리자 | loudasobi",
@@ -43,7 +43,7 @@ export default async function AdminPage() {
               ? session.role === "admin"
                 ? "관리자 권한으로 로그인했습니다."
                 : "열람 전용 권한으로 로그인했습니다."
-              : "MONOASOBI에서 사용하는 관리자 비밀번호로 로그인하세요."}
+              : "관리자 비밀번호로 로그인하세요."}
           </p>
         </div>
         {status && (

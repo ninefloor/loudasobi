@@ -118,7 +118,12 @@ export function CueInspector({
           </p>
         </div>
         {cue.type === "singalong" && (
-          <SingalongTextEditor cue={cue} lines={lines} disabled={disabled} onChange={onChange} />
+          <SingalongTextEditor
+            cue={cue}
+            lines={lines}
+            disabled={disabled}
+            onChange={onChange}
+          />
         )}
         <PatternEditor
           cue={cue}

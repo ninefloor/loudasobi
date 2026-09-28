@@ -196,9 +196,7 @@ export function EditorWorkspace({
             clock={clock}
             ready={playback.ready}
             offset={track.sync}
-            onOffsetChange={() => {}}
             onSeek={seek}
-            editing
           />
         ) : (
           <VerticalTimeline

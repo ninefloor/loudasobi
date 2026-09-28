@@ -1,6 +1,6 @@
 "use client";
 
-import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { LoaderCircle, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/button";
@@ -35,35 +35,58 @@ export function PlayerBar({
       className="shrink-0 border-t bg-background px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-6"
     >
       {p.error && (
-        <p
-          role="alert"
-          className="mx-auto mb-2 max-w-5xl text-xs text-destructive"
-        >
-          {t(p.error)}
-        </p>
+        <div className="mx-auto mb-3 flex max-w-[720px] items-center gap-3">
+          <p role="alert" className="flex-1 text-xs text-destructive">
+            {t(p.error)}
+          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            className="min-h-10"
+            onClick={() => {
+              setScrubTime(null);
+              p.retry();
+            }}
+          >
+            {t("retryPlayback")}
+          </Button>
+        </div>
       )}
-      <div className="mx-auto flex max-w-5xl items-center gap-3">
+      <div className="mx-auto flex max-w-[720px] items-center gap-3">
         <Button
-          disabled={!p.ready}
+          disabled={!p.ready || p.error === "loadError"}
           size="icon"
+          className="size-11"
           onClick={p.toggle}
           aria-label={p.playing ? t("pause") : t("play")}
         >
-          {p.playing ? <Pause /> : <Play />}
+          {p.buffering ? (
+            <LoaderCircle className="animate-spin motion-reduce:animate-none" />
+          ) : p.playing ? (
+            <Pause />
+          ) : (
+            <Play />
+          )}
         </Button>
         <div className="min-w-0 flex-1">
           <div className="mb-2 flex items-center justify-between gap-3 text-xs">
             <span title={music.title} className="truncate font-medium">
               {music.title}
             </span>
-            <span className="shrink-0 text-muted-foreground">
-              {!music.youtubeId
-                ? t("audioPending")
-                : !p.ready
-                  ? t("connecting")
-                  : p.playing
-                    ? t("playing")
-                    : t("pause")}
+            <span role="status" className="shrink-0 text-muted-foreground">
+              {p.error
+                ? t("playbackFailed")
+                : !music.youtubeId
+                  ? t("audioPending")
+                  : !p.ready
+                    ? t("connecting")
+                    : p.buffering
+                      ? t("buffering")
+                      : p.playing
+                        ? t("playing")
+                        : currentTime > 0
+                          ? t("paused")
+                          : t("readyToPlay")}
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -91,6 +114,7 @@ export function PlayerBar({
         <Button
           variant="ghost"
           size="icon"
+          className="size-11"
           onClick={() => p.setVolume(p.volume > 0 ? 0 : 1)}
           aria-label={p.volume > 0 ? t("mute") : t("unmute")}
         >

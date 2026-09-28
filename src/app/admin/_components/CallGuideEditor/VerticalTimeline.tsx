@@ -5,7 +5,18 @@ import { useTimelinePlayback } from "./useTimelinePlayback";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { cuePulses, type CallCue } from "@/lib/callGuide";
+import { cuePulses, cueTextSelections, type CallCue } from "@/lib/callGuide";
+import {
+  lyricTextFields,
+  lyricTextLabels,
+  lyricTextLang,
+  type LyricTextField,
+} from "@/lib/lyricText";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
+import { HighlightedText } from "@/components/player/HighlightedText";
 import type { LyricLine } from "@/types/lyric";
 import type { Playback } from "@/components/player/MusicExperience/usePlayback";
 import {
@@ -39,6 +50,7 @@ export function VerticalTimeline({
   onChange: (cue: CallCue) => void;
 }) {
   const [scale, setScale] = useState(48);
+  const [textField, setTextField] = useState<LyricTextField>("kr");
   const viewport = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLDivElement>(null);
   const selectionAnchor = useRef(0);
@@ -131,6 +143,19 @@ export function VerticalTimeline({
         >
           재생 위치로
         </Button>
+        <NativeSelect
+          aria-label="타임라인 가사 표시"
+          value={textField}
+          onChange={(event) =>
+            setTextField(event.target.value as LyricTextField)
+          }
+        >
+          {lyricTextFields.map((field) => (
+            <NativeSelectOption key={field} value={field}>
+              {field === "jp" ? "원문만" : `원문 + ${lyricTextLabels[field]}`}
+            </NativeSelectOption>
+          ))}
+        </NativeSelect>
         <span className="text-xs text-muted-foreground">
           시간 눈금 클릭으로 탐색 / 가사 클릭·Shift 선택 / 빈 콜 영역 드래그로
           생성 / 블록 드래그로 이동 · 위아래 손잡이로 길이 조절
@@ -195,7 +220,7 @@ export function VerticalTimeline({
             <button
               type="button"
               key={line.id ?? index}
-              title={`${line.jp} · ${(line.start + sync).toFixed(2)}초`}
+              title={`${line.jp}\n${textField === "jp" ? "" : line[textField] || "자료 없음"}\n${(line.start + sync).toFixed(2)}초`}
               aria-pressed={selectedLines.includes(index)}
               className={cn(
                 "absolute left-0 w-[calc(50%-6px)] overflow-hidden rounded border bg-card px-2 text-left text-xs",
@@ -220,7 +245,17 @@ export function VerticalTimeline({
                 }
               }}
             >
-              {line.jp}
+              <span lang="ja" className="block truncate">
+                {line.jp}
+              </span>
+              {textField !== "jp" && (
+                <span
+                  lang={lyricTextLang[textField]}
+                  className="mt-1 block truncate text-muted-foreground"
+                >
+                  {line[textField] || "자료 없음"}
+                </span>
+              )}
             </button>
           ))}
           {shown.map((cue) => (
@@ -253,6 +288,32 @@ export function VerticalTimeline({
                 <span className="relative z-10">
                   {callLabels[cue.type]}
                   {cue.label && ` · ${cue.label}`}
+                  {cue.type === "singalong" &&
+                    cue.lines.map((snapshot) => {
+                      const text =
+                        lines.find((line) => line.id === snapshot.id)?.[
+                          textField
+                        ] ?? "";
+                      const ranges = cueTextSelections(cue).filter(
+                        (range) =>
+                          range.lineId === snapshot.id &&
+                          range.field === textField &&
+                          range.text === text,
+                      );
+                      return (
+                        <span
+                          key={snapshot.id}
+                          lang={lyricTextLang[textField]}
+                          className="mt-1 block truncate"
+                          title={text || "자료 없음"}
+                        >
+                          <HighlightedText
+                            text={text || "자료 없음"}
+                            ranges={ranges}
+                          />
+                        </span>
+                      );
+                    })}
                 </span>
                 {cuePulses(cue).map((time, i) => (
                   <span

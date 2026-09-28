@@ -1,9 +1,7 @@
 import { memo } from "react";
 import { useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { CallSection, LyricLine, LyricLocale } from "@/types/lyric";
-import { callStyles } from "./guideStyles";
 import { HighlightedText } from "../HighlightedText";
 import type { LyricTextField } from "@/lib/lyricText";
 
@@ -25,32 +23,17 @@ export const LyricRow = memo(function LyricRow({
   onSeek: (index: number) => void;
 }) {
   const t = useTranslations();
-  const section = sections[0];
   function highlighted(field: LyricTextField) {
-    const ranges = sections.flatMap(s => [
+    const ranges = sections.flatMap((s) => [
       ...(field === "jp" && s.selection?.line === index ? [s.selection] : []),
-      ...(s.textSelections ?? []).filter(range => range.lineId === line.id && range.field === field),
+      ...(s.textSelections ?? []).filter(
+        (range) => range.lineId === line.id && range.field === field,
+      ),
     ]);
     return <HighlightedText text={line[field] ?? ""} ranges={ranges} />;
   }
   return (
-    <div
-      data-line-index={index}
-      className={cn(
-        "my-2 rounded-lg border border-transparent",
-        section && callStyles[section.type],
-      )}
-    >
-      {sections.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-1 px-4 pt-3">
-          {sections.map((s) => (
-            <Badge key={s.id} variant="outline" className="bg-background">
-              {t(s.type)}
-              {s.label ? ` · ${s.label}` : ""}
-            </Badge>
-          ))}
-        </div>
-      )}
+    <div data-line-index={index}>
       <button
         type="button"
         disabled={!ready}
@@ -60,29 +43,38 @@ export const LyricRow = memo(function LyricRow({
           lyric: line.instrumental ? t("instrumental") : line.jp,
         })}
         className={cn(
-          "block w-full rounded-[inherit] px-4 py-5 text-center transition-[background-color,color,box-shadow] duration-(--motion-lyric) enabled:cursor-pointer enabled:hover:bg-muted/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
-          active && "bg-accent/70 text-accent-foreground",
+          "block w-full px-4 py-4 sm:py-5 text-center transition-[background-color,color,box-shadow] duration-(--motion-lyric) enabled:cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+          active
+            ? "bg-[var(--guide-active-bg,var(--accent))] text-[color:var(--guide-active-text,var(--accent-foreground))] shadow-[inset_3px_0_0_var(--guide-color,var(--primary))]"
+            : "enabled:hover:bg-muted/50",
         )}
       >
         <span
           lang="ja"
-          className="block text-base font-semibold leading-relaxed sm:text-lg"
+          className={cn(
+            "block text-base leading-relaxed sm:text-lg",
+            active ? "font-bold" : "font-medium",
+          )}
         >
-          {line.instrumental
-            ? t("instrumental")
-            : highlighted("jp")}
+          {line.instrumental ? t("instrumental") : highlighted("jp")}
         </span>
         {!line.instrumental && locale === "ko" && (
           <>
             <span
               lang="ko"
-              className="mt-1 block text-base font-medium leading-relaxed"
+              className={cn(
+                "mt-1.5 block text-base leading-relaxed sm:text-lg",
+                active ? "font-semibold" : "font-medium",
+              )}
             >
               {highlighted("jpReading")}
             </span>
             <span
               lang="ko"
-              className="mt-1 block text-sm leading-relaxed text-muted-foreground"
+              className={cn(
+                "mt-2 block text-xs sm:text-sm leading-relaxed",
+                active ? "text-inherit opacity-80" : "text-muted-foreground",
+              )}
             >
               {highlighted("kr")}
             </span>
@@ -93,7 +85,10 @@ export const LyricRow = memo(function LyricRow({
             {line.enReading && (
               <span
                 lang="en"
-                className="mt-1 block text-base font-medium leading-relaxed"
+                className={cn(
+                  "mt-1.5 block text-base leading-relaxed sm:text-lg",
+                  active ? "font-semibold" : "font-medium",
+                )}
               >
                 {highlighted("enReading")}
               </span>
@@ -101,7 +96,10 @@ export const LyricRow = memo(function LyricRow({
             {line.en && (
               <span
                 lang="en"
-                className="mt-1 block text-sm leading-relaxed text-muted-foreground"
+                className={cn(
+                  "mt-2 block text-xs sm:text-sm leading-relaxed",
+                  active ? "text-inherit opacity-80" : "text-muted-foreground",
+                )}
               >
                 {highlighted("en")}
               </span>

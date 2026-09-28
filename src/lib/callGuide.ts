@@ -15,13 +15,18 @@ const common = {
   label: z.string().max(200),
   lines: z.array(sourceLine).max(500),
   pulseTimes: z.array(time).max(2000),
-  textSelections: z.array(z.object({
-    lineId: z.string().min(1).max(200),
-    field: z.enum(lyricTextFields),
-    text: z.string().min(1).max(10000),
-    start: z.number().int().nonnegative(),
-    end: z.number().int().positive(),
-  })).max(2500).optional(),
+  textSelections: z
+    .array(
+      z.object({
+        lineId: z.string().min(1).max(200),
+        field: z.enum(lyricTextFields),
+        text: z.string().min(1).max(10000),
+        start: z.number().int().nonnegative(),
+        end: z.number().int().positive(),
+      }),
+    )
+    .max(2500)
+    .optional(),
   selection: z
     .object({
       start: z.number().int().nonnegative(),
@@ -50,10 +55,20 @@ export const guideSchema = z
   });
 export type CallGuide = z.infer<typeof guideSchema>;
 export type CallCue = CallGuide["cues"][number];
-export function cueTextSelections(cue: CallCue): NonNullable<CallCue["textSelections"]> {
+export function cueTextSelections(
+  cue: CallCue,
+): NonNullable<CallCue["textSelections"]> {
   const ranges = cue.textSelections ?? [];
   if (!cue.selection || cue.lines.length !== 1) return ranges;
-  return [{...cue.selection, lineId: cue.lines[0].id, field: "jp", text: cue.lines[0].jp}, ...ranges];
+  return [
+    {
+      ...cue.selection,
+      lineId: cue.lines[0].id,
+      field: "jp",
+      text: cue.lines[0].jp,
+    },
+    ...ranges,
+  ];
 }
 export function defaultPulsePattern(
   bpm = 120,
@@ -194,10 +209,22 @@ export function resolveGuide(guide: CallGuide, lines: readonly LyricLine[]) {
       issue = "부분 떼창은 연결된 한 줄 안에서 선택해 주세요.";
     else if (cueTextSelections(cue).length) {
       const ranges = cueTextSelections(cue);
-      if (cue.type !== "singalong" || new Set(ranges.map(r => `${r.lineId}:${r.field}`)).size !== ranges.length || ranges.some(range => {
-        const line = selected.find(line => line.id === range.lineId);
-        return !line || line[range.field] !== range.text || range.start >= range.end || range.end > range.text.length;
-      })) issue = "떼창 번역·독음 또는 선택 범위가 변경되었습니다. 해당 표시에서 범위를 다시 선택하거나 강조를 해제해 주세요.";
+      if (
+        cue.type !== "singalong" ||
+        new Set(ranges.map((r) => `${r.lineId}:${r.field}`)).size !==
+          ranges.length ||
+        ranges.some((range) => {
+          const line = selected.find((line) => line.id === range.lineId);
+          return (
+            !line ||
+            line[range.field] !== range.text ||
+            range.start >= range.end ||
+            range.end > range.text.length
+          );
+        })
+      )
+        issue =
+          "떼창 번역·독음 또는 선택 범위가 변경되었습니다. 해당 표시에서 범위를 다시 선택하거나 강조를 해제해 주세요.";
     }
     if (issue) {
       issues[cue.id] = issue;
@@ -213,7 +240,9 @@ export function resolveGuide(guide: CallGuide, lines: readonly LyricLine[]) {
       lastLine: first + cue.lines.length - 1,
       pulseTimes: pulses,
       selection: cue.selection ? { ...cue.selection, line: first } : undefined,
-      textSelections: cue.textSelections?.map(({lineId, field, start, end}) => ({lineId, field, start, end})),
+      textSelections: cue.textSelections?.map(
+        ({ lineId, field, start, end }) => ({ lineId, field, start, end }),
+      ),
     });
   }
   return { sections, issues };

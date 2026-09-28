@@ -62,11 +62,17 @@ export function useGuideTimeline(
     let previousTime = clock.read().time - offset;
     let animation: Animation | null = null;
     let animatedLine = -1;
+    let animatedBlock: HTMLElement | null = null;
+    const blockAt = (index: number) =>
+      viewportRef.current
+        ?.querySelector<HTMLElement>(`[data-line-index="${index}"]`)
+        ?.closest<HTMLElement>("[data-call-block]");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const cancel = () => {
       animation?.cancel();
       animation = null;
       animatedLine = -1;
+      animatedBlock = null;
     };
     reduced.addEventListener("change", cancel);
     const unsubscribe = clock.subscribeFrame((sample) => {
@@ -83,37 +89,44 @@ export function useGuideTimeline(
         return;
       }
       const lineIndex = activeLineAt(lines, starts, time);
-      if (animatedLine !== lineIndex) cancel();
+      if (animatedBlock && animatedLine !== lineIndex) {
+        if (blockAt(lineIndex) !== animatedBlock) cancel();
+        else animatedLine = lineIndex;
+      }
       const hitIndex = upperBound(hits, time) - 1;
       const hit = hits[hitIndex];
       if (hit === undefined || hit <= previous || time - hit > 0.14) return;
-      // A late frame must not flash the next lyric for the previous line's hit.
-      if (activeLineAt(lines, starts, hit) !== lineIndex) return;
-      const row = viewportRef.current?.querySelector<HTMLElement>(
-        `[data-line-index="${lineIndex}"] button`,
-      );
-      if (!row) return;
+      // Keep pulses within their call block, including across lyric boundaries.
+      const block = blockAt(activeLineAt(lines, starts, hit));
+      if (!block || block !== blockAt(lineIndex)) return;
+      const overlay = block.querySelector<HTMLElement>("[data-guide-pulse]");
+      if (!overlay) return;
       cancel();
       animatedLine = lineIndex;
-      animation = row.animate(
+      animatedBlock = block;
+      animation = overlay.animate(
         reduced.matches
           ? [
-              { outline: "2px solid var(--primary)", outlineOffset: "-2px" },
+              {
+                outline: "2px solid var(--guide-color, var(--primary))",
+                outlineOffset: "-2px",
+              },
               { outline: "2px solid transparent", outlineOffset: "-2px" },
             ]
           : [
               {
-                boxShadow: "inset 0 0 0 2px var(--primary)",
-                backgroundColor:
-                  "color-mix(in oklch, var(--primary) 20%, var(--background))",
+                boxShadow:
+                  "inset 0 0 0 2px var(--guide-color, var(--primary)), inset 0 0 16px 2px color-mix(in oklch, var(--guide-color, var(--primary)) 22%, transparent)",
               },
               {
-                boxShadow: "inset 0 0 0 2px var(--primary)",
-                backgroundColor:
-                  "color-mix(in oklch, var(--primary) 20%, var(--background))",
+                boxShadow:
+                  "inset 0 0 0 2px var(--guide-color, var(--primary)), inset 0 0 16px 2px color-mix(in oklch, var(--guide-color, var(--primary)) 22%, transparent)",
                 offset: 0.35,
               },
-              { boxShadow: "inset 0 0 0 0 transparent" },
+              {
+                boxShadow:
+                  "inset 0 0 0 2px transparent, inset 0 0 16px 2px transparent",
+              },
             ],
         { duration: reduced.matches ? 180 : 380, easing: "ease-out" },
       );

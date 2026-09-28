@@ -1,7 +1,7 @@
 "use client";
 
 import ReactPlayer from "react-player";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import type { LyricTrack, CallSection } from "@/types/lyric";
 import { GuidePreview } from "./GuidePreview";
 import { PlayerBar } from "./PlayerBar";
@@ -22,8 +22,7 @@ export function MusicExperience({
   editorOnly?: boolean;
 }) {
   const { attachPlayer, ...playback } = usePlayback();
-  const [adjustment, setAdjustment] = useState(0);
-  const offset = (track?.sync ?? 0) + adjustment;
+  const offset = track?.sync ?? 0;
   return (
     <>
       {music.youtubeId && (
@@ -33,6 +32,7 @@ export function MusicExperience({
           className="pointer-events-none absolute size-px overflow-hidden opacity-0"
         >
           <ReactPlayer
+            key={playback.playerKey}
             ref={attachPlayer}
             src={`https://www.youtube.com/watch?v=${music.youtubeId}`}
             width={320}
@@ -54,12 +54,8 @@ export function MusicExperience({
             clock={playback.clock}
             ready={playback.ready}
             offset={offset}
-            onOffsetChange={(value) =>
-              setAdjustment(value - (track?.sync ?? 0))
-            }
             onSeek={playback.seek}
             sections={sections}
-            editing={!!editor}
           />
         )}
       </div>

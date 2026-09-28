@@ -31,5 +31,10 @@ export interface CallSection {
   pulseTimes: number[];
   // Optional selected text offsets, not pre-split lyric segments.
   selection?: { line: number; start: number; end: number };
-  textSelections?: {lineId: string; field: LyricTextField; start: number; end: number}[];
+  textSelections?: {
+    lineId: string;
+    field: LyricTextField;
+    start: number;
+    end: number;
+  }[];
 }

@@ -16,6 +16,8 @@ export function usePlayback() {
   const [duration, setDuration] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [ready, setReady] = useState(false);
+  const [buffering, setBuffering] = useState(false);
+  const [playerKey, setPlayerKey] = useState(0);
   const [volume, setVolume] = useState(1);
   const [error, setError] = useState<"playError" | "loadError" | null>(null);
 
@@ -118,11 +120,30 @@ export function usePlayback() {
     duration,
     playing,
     ready,
+    buffering,
+    playerKey,
     volume,
     error,
     setVolume,
     seek,
     seekBy,
+    retry: () => {
+      if (error === "playError") {
+        void play();
+        return;
+      }
+      stop();
+      runningRef.current = false;
+      seekingRef.current = false;
+      seekTargetRef.current = 0;
+      setPlaying(false);
+      setReady(false);
+      setBuffering(false);
+      setDuration(0);
+      setError(null);
+      clock.publish(0, false, true);
+      setPlayerKey((key) => key + 1);
+    },
     toggle: () => {
       if (playing) void playerRef.current?.pause();
       else void play();
@@ -130,6 +151,7 @@ export function usePlayback() {
     events: {
       onLoadedMetadata: () => {
         setReady(true);
+        setError(null);
         syncDuration();
         sync(true);
       },
@@ -146,6 +168,8 @@ export function usePlayback() {
         if (runningRef.current) start();
       },
       onPlaying: () => {
+        setBuffering(false);
+        setError(null);
         runningRef.current = true;
         seekingRef.current = false;
         setPlaying(true);
@@ -157,23 +181,28 @@ export function usePlayback() {
         sync(true);
       },
       onWaiting: () => {
+        setBuffering(true);
         runningRef.current = false;
         stop();
         sync(true);
       },
       onPause: () => {
+        setBuffering(false);
         runningRef.current = false;
         setPlaying(false);
         stop();
         sync(true);
       },
       onEnded: () => {
+        setBuffering(false);
         runningRef.current = false;
         setPlaying(false);
         stop();
         sync(true);
       },
       onError: () => {
+        setReady(false);
+        setBuffering(false);
         setError("loadError");
         runningRef.current = false;
         setPlaying(false);

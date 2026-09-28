@@ -12,7 +12,7 @@ export function useEditorShortcuts({ ready, toggle, seekBy }: Playback) {
         target instanceof HTMLElement &&
         (target.isContentEditable ||
           target.closest(
-              'input, textarea, select, [role="combobox"], [role="listbox"], [data-text-selection]',
+            'input, textarea, select, [role="combobox"], [role="listbox"], [data-text-selection]',
           ))
       )
         return;
