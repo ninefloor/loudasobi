@@ -1,7 +1,8 @@
-import { localizedMetadata, siteViewport } from "@/lib/metadata";
-import { Providers } from "./providers";
-import "./globals.css";
 import { getRequestLocale } from "@/i18n/server";
+import { localizedMetadata, siteViewport } from "@/lib/metadata";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
+import { Providers } from "./providers";
 
 export async function generateMetadata() {
   return localizedMetadata(await getRequestLocale());
@@ -18,6 +19,7 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className="antialiased">
         <Providers locale={locale}>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
