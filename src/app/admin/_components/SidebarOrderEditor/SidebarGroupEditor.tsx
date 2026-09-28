@@ -1,6 +1,7 @@
 "use client";
 import { GripVertical, ArrowUp, ArrowDown, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
   NativeSelect,
@@ -30,7 +31,11 @@ export function SidebarGroupEditor({
   onDropGroup,
   onChange,
 }: {
-  group: { id: string | null; name: string; musicIds: number[] };
+  group: {
+    id: string | null;
+    name: SidebarLayout["groups"][number]["name"];
+    musicIds: number[];
+  };
   index: number;
   layout: SidebarLayout;
   songs: Map<number, SidebarDocument["songs"][number]>;
@@ -73,7 +78,7 @@ export function SidebarGroupEditor({
               disabled={disabled}
               draggable={!disabled}
               className="cursor-grab active:cursor-grabbing"
-              aria-label={`${group.name} 그룹 순서 드래그`}
+              aria-label={`${group.name.ko} 그룹 순서 드래그`}
               onDragStart={(event) => {
                 event.dataTransfer.effectAllowed = "move";
                 event.dataTransfer.setData("text/plain", group.id!);
@@ -86,26 +91,56 @@ export function SidebarGroupEditor({
             >
               <GripVertical />
             </Button>
-            <Input
-              className="min-w-32 flex-1"
-              aria-label={`그룹 ${index + 1} 이름`}
-              value={group.name}
-              maxLength={80}
-              disabled={disabled}
-              onChange={(event) =>
-                onChange({
-                  ...layout,
-                  groups: layout.groups.map((g) =>
-                    g.id === group.id ? { ...g, name: event.target.value } : g,
-                  ),
-                })
-              }
-            />
+            <div className="grid min-w-48 flex-1 gap-3 sm:grid-cols-3">
+              {(
+                [
+                  { locale: "ko", label: "한국어" },
+                  { locale: "en", label: "영어" },
+                  { locale: "ja", label: "일본어" },
+                ] as const
+              ).map(({ locale, label }) => (
+                <div key={locale} className="space-y-1.5">
+                  <Label
+                    htmlFor={`group-${group.id}-${locale}`}
+                    className="text-xs"
+                  >
+                    {label}
+                  </Label>
+                  <Input
+                    id={`group-${group.id}-${locale}`}
+                    lang={locale}
+                    aria-label={`그룹 ${index + 1} ${label} 이름`}
+                    value={group.name[locale]}
+                    maxLength={80}
+                    disabled={disabled}
+                    placeholder={
+                      locale === "ko" ? "그룹 이름" : "미입력 시 한국어 이름"
+                    }
+                    onChange={(event) =>
+                      onChange({
+                        ...layout,
+                        groups: layout.groups.map((g) =>
+                          g.id === group.id
+                            ? {
+                                ...g,
+                                name: {
+                                  ...g.name,
+                                  [locale]: event.target.value,
+                                },
+                              }
+                            : g,
+                        ),
+                      })
+                    }
+                  />
+                </div>
+              ))}
+            </div>
             <Button
               size="icon"
               variant="ghost"
               disabled={disabled || index === 0}
-              aria-label={`${group.name} 그룹 위로`}
+              aria-label={`${group.name.ko} 그룹 위로`}
               onClick={() =>
                 onChange(
                   moveSidebarGroup(
@@ -122,7 +157,7 @@ export function SidebarGroupEditor({
               size="icon"
               variant="ghost"
               disabled={disabled || index === layout.groups.length - 1}
-              aria-label={`${group.name} 그룹 아래로`}
+              aria-label={`${group.name.ko} 그룹 아래로`}
               onClick={() =>
                 onChange(
                   moveSidebarGroup(
@@ -139,7 +174,7 @@ export function SidebarGroupEditor({
               size="icon"
               variant="ghost"
               disabled={disabled}
-              aria-label={`${group.name} 그룹 삭제`}
+              aria-label={`${group.name.ko} 그룹 삭제`}
               onClick={() => {
                 if (
                   group.musicIds.length &&
@@ -236,7 +271,7 @@ export function SidebarGroupEditor({
                 <NativeSelectOption value="">그룹 없음</NativeSelectOption>
                 {layout.groups.map((g) => (
                   <NativeSelectOption key={g.id} value={g.id}>
-                    {g.name || "이름 없음"}
+                    {g.name.ko || "이름 없음"}
                   </NativeSelectOption>
                 ))}
               </NativeSelect>

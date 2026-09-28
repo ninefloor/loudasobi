@@ -43,13 +43,12 @@ export function CueInspector({
 }) {
   return (
     <div className="space-y-4 p-4">
-      <h2 className="font-medium">{callLabels[cue.type]} 블록</h2>
       {issue && (
         <p role="alert" className="text-xs text-destructive">
           {issue}
         </p>
       )}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap justify-end gap-2">
         <Button
           size="xs"
           variant="outline"

@@ -1,9 +1,8 @@
 "use client";
 
 import { useCallback, useId, useMemo, useRef } from "react";
-import { Music2 } from "lucide-react";
+import { LocateFixed, Music2, Pause } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
@@ -18,7 +17,6 @@ import type {
 } from "@/types/lyric";
 import { LyricRow } from "./GuidePreview/LyricRow";
 import { groupLyrics } from "./GuidePreview/groupLyrics";
-import { callBadgeStyles, callStyles } from "./GuidePreview/guideStyles";
 import { cn } from "@/lib/utils";
 import { displayTimeline } from "./GuidePreview/displayTimeline";
 
@@ -86,9 +84,10 @@ export function GuidePreview({
       className="flex min-h-0 flex-1 flex-col overflow-hidden"
       aria-labelledby="song-title"
     >
-      <header className="shrink-0 border-b bg-background px-4 py-3 sm:px-6">
-        <div className="mx-auto flex max-w-[720px] flex-wrap items-center justify-between gap-x-4 gap-y-2">
-          <div className="min-w-0 flex-1 basis-40">
+      <header className="shrink-0 border-b bg-background px-4 py-2 sm:px-6">
+        <div className="mx-auto grid max-w-[720px] grid-cols-[64px_minmax(0,1fr)_64px] items-center gap-x-2 gap-y-1.5">
+          <FanLightBadge color={music.fanLightColor} />
+          <div className="min-w-0 text-center">
             <h1
               id="song-title"
               className="text-lg font-semibold leading-snug break-words"
@@ -102,9 +101,9 @@ export function GuidePreview({
               </p>
             )}
           </div>
-          <FanLightBadge color={music.fanLightColor} />
-          <div className="flex min-h-11 w-full flex-wrap items-center justify-between gap-2 border-t pt-2">
-            <div className="flex min-h-10 flex-wrap items-center gap-3">
+          <span aria-hidden="true" />
+          <div className="col-span-3 flex h-8 w-full items-center justify-between gap-2 border-t pt-1">
+            <div className="flex items-center gap-2.5">
               <Label htmlFor={followId} className="cursor-pointer text-xs">
                 {t("autoFollow")}
               </Label>
@@ -112,6 +111,11 @@ export function GuidePreview({
                 id={followId}
                 checked={follow.mode !== "off"}
                 onCheckedChange={follow.toggle}
+                className={
+                  follow.mode === "paused"
+                    ? "data-checked:bg-muted-foreground/30 opacity-70"
+                    : undefined
+                }
                 aria-describedby={
                   follow.mode === "paused" ? `${followId}-status` : undefined
                 }
@@ -122,18 +126,21 @@ export function GuidePreview({
                   role="status"
                   className="text-xs text-muted-foreground"
                 >
-                  {t("followPausedStatus")}
+                  <Pause aria-hidden="true" className="size-3.5" />
+                  <span className="sr-only">{t("followPausedStatus")}</span>
                 </span>
               )}
             </div>
             {follow.mode !== "following" && (
               <Button
-                size="sm"
-                className="min-h-10"
+                size="icon-sm"
+                className="relative after:absolute after:-inset-1.5"
+                aria-label={t("currentLyric")}
+                title={t("currentLyric")}
                 disabled={activeIndex < 0}
                 onClick={follow.resume}
               >
-                {t("currentLyric")}
+                <LocateFixed aria-hidden="true" className="size-4" />
               </Button>
             )}
           </div>
@@ -149,7 +156,7 @@ export function GuidePreview({
           tabIndex: 0,
         }}
       >
-        <div className="mx-auto max-w-[880px] px-14 py-6 sm:px-20">
+        <div className="mx-auto max-w-[720px] px-1 py-6 sm:px-6">
           <p
             className="mb-4 text-center text-xs text-muted-foreground"
             role="status"
@@ -192,9 +199,8 @@ export function GuidePreview({
                   }
                   className={cn(
                     "relative isolate my-3 transition-[border-color] motion-reduce:transition-none",
-                    group.sections.length > 0 && "rounded-lg border",
                     group.sections.length > 0 &&
-                      callStyles[group.sections[0].type],
+                      "rounded-lg border bg-background",
                   )}
                 >
                   {group.sections.length > 0 && (
@@ -204,33 +210,6 @@ export function GuidePreview({
                       className="pointer-events-none absolute inset-0 z-10 rounded-[inherit] opacity-0"
                     />
                   )}
-                  {group.sections.length > 0 && (
-                    <div className="pointer-events-none absolute inset-y-0 -left-14 z-20 w-12 sm:-left-20 sm:w-16">
-                      <div className="sticky top-1/2 flex -translate-y-1/2 flex-col items-center gap-2">
-                        {group.sections.map((section) => (
-                          <Badge
-                            key={section.id}
-                            variant="outline"
-                            data-active={activeSectionIds.has(section.id)}
-                            className={cn(
-                              "h-auto min-h-6 max-w-full gap-1 px-1.5 py-1 text-center whitespace-normal break-words transition-colors motion-reduce:transition-none",
-                              callBadgeStyles[section.type],
-                            )}
-                          >
-                            {activeSectionIds.has(section.id) && (
-                              <span
-                                aria-hidden="true"
-                                className="size-1.5 rounded-full bg-current"
-                              />
-                            )}
-                            {section.type === "chant"
-                              ? section.labels?.[locale] || section.label
-                              : `${t(section.type)}${(section.labels?.[locale] ?? section.label) ? ` · ${section.labels?.[locale] ?? section.label}` : ""}`}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                   {group.indices.map((index) => (
                     <LyricRow
                       key={display.rows[index].id ?? index}
@@ -239,6 +218,22 @@ export function GuidePreview({
                       locale={locale}
                       sections={sectionByLine[index]}
                       active={index === activeIndex}
+                      badges={group.sections.filter((section) => {
+                        const followsCurrent =
+                          activeSectionIds.has(section.id) &&
+                          (sectionByLine[activeIndex] ?? []).some(
+                            (item) => item.id === section.id,
+                          );
+                        const anchor = followsCurrent
+                          ? activeIndex
+                          : group.indices.find((row) =>
+                              sectionByLine[row].some(
+                                (item) => item.id === section.id,
+                              ),
+                            );
+                        return anchor === index;
+                      })}
+                      activeSectionIds={activeSectionIds}
                       ready={ready}
                       onSeek={jump}
                     />

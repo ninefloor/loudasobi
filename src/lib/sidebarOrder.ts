@@ -12,7 +12,21 @@ export const sidebarLayoutSchema = z
               .min(1)
               .max(100)
               .refine((id) => id !== "ungrouped"),
-            name: z.string().trim().min(1).max(80),
+            name: z.union([
+              z
+                .string()
+                .trim()
+                .min(1)
+                .max(80)
+                .transform((ko) => ({ ko, en: "", ja: "" })),
+              z
+                .object({
+                  ko: z.string().trim().min(1).max(80),
+                  en: z.string().trim().max(80).default(""),
+                  ja: z.string().trim().max(80).default(""),
+                })
+                .strict(),
+            ]),
             musicIds: ids,
           })
           .strict(),

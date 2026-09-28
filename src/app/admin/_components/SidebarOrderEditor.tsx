@@ -161,7 +161,11 @@ export function SidebarOrderEditor({
               ...layout,
               groups: [
                 ...layout.groups,
-                { id: crypto.randomUUID(), name: "새 그룹", musicIds: [] },
+                {
+                  id: crypto.randomUUID(),
+                  name: { ko: "새 그룹", en: "", ja: "" },
+                  musicIds: [],
+                },
               ],
             })
           }
@@ -205,7 +209,11 @@ export function SidebarOrderEditor({
             )}
             {[
               ...layout.groups,
-              { id: null, name: "그룹 없음", musicIds: layout.ungrouped },
+              {
+                id: null,
+                name: { ko: "그룹 없음", en: "", ja: "" },
+                musicIds: layout.ungrouped,
+              },
             ].map((group, index) => (
               <SidebarGroupEditor
                 key={group.id ?? "ungrouped"}
@@ -229,25 +237,30 @@ export function SidebarOrderEditor({
           <div className="space-y-4 p-5">
             <h2 className="text-sm font-semibold">추천순 미리보기</h2>
             <p className="text-xs text-muted-foreground">
-              그룹 이름은 입력한 그대로 표시됩니다. 빈 그룹은 공개 화면에서
-              숨깁니다.
+              한국어 이름 기준 미리보기입니다. 공개 화면에서는 선택한 언어의
+              이름을 표시하며, 번역이 비어 있으면 한국어 이름을 사용합니다. 빈
+              그룹은 숨깁니다.
             </p>
             {[
               ...visiblePreview.groups,
               {
                 id: null,
-                name: visiblePreview.groups.some((g) => g.musicIds.length)
-                  ? "기타 곡"
-                  : "",
+                name: {
+                  ko: visiblePreview.groups.some((g) => g.musicIds.length)
+                    ? "기타 곡"
+                    : "",
+                  en: "",
+                  ja: "",
+                },
                 musicIds: visiblePreview.ungrouped,
               },
             ]
               .filter((g) => g.musicIds.length)
               .map((g) => (
                 <section key={g.id ?? "ungrouped"} className="space-y-2">
-                  {g.name && (
+                  {g.name.ko && (
                     <h3 className="break-words text-sm font-semibold text-primary">
-                      {g.name}
+                      {g.name.ko}
                     </h3>
                   )}
                   {g.musicIds.map((id) => (

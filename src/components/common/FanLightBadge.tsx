@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { fanLightHex, normalizeFanLightColor } from "@/lib/fanlights";
-import { cn } from "@/lib/utils";
 
 export function FanLightBadge({
   color,
@@ -15,14 +14,39 @@ export function FanLightBadge({
   const t = useTranslations();
   const hex = fanLightHex(color);
   const name = normalizeFanLightColor(color) ?? color;
+  if (!compact)
+    return (
+      <span
+        className="flex min-w-0 flex-col items-center gap-1 rounded-lg border px-2 py-1.5"
+        style={
+          hex
+            ? {
+                backgroundColor: `color-mix(in srgb, ${hex} 12%, var(--background))`,
+                borderColor: `color-mix(in srgb, ${hex} 45%, var(--border))`,
+              }
+            : undefined
+        }
+        aria-label={`${t("fanlightColor")}: ${name || t("fanlightUnset")}`}
+      >
+        <Badge
+          variant="outline"
+          aria-hidden="true"
+          className="h-7 w-10 rounded-lg border-black/15 dark:border-white/25"
+          style={{
+            backgroundColor: hex,
+            boxShadow: hex ? `0 0 10px ${hex}33` : undefined,
+          }}
+        />
+        <span className="max-w-full text-center text-[10px] font-medium leading-tight text-muted-foreground">
+          {name || t("fanlightUnset")}
+        </span>
+      </span>
+    );
   return (
     <Badge
       variant="outline"
       aria-label={`${t("fanlightColor")}: ${name || t("fanlightUnset")}`}
-      className={cn(
-        "max-w-full gap-2 rounded-lg text-foreground",
-        compact ? "h-6 px-2 text-[10px]" : "h-auto px-3 py-2",
-      )}
+      className="h-6 max-w-full gap-2 rounded-lg px-2 text-[10px] text-foreground"
       style={
         hex
           ? {
@@ -35,22 +59,13 @@ export function FanLightBadge({
       {hex && (
         <span
           aria-hidden="true"
-          className={cn(
-            "shrink-0 rounded-full border border-black/20",
-            compact ? "size-3" : "size-6",
-          )}
+          className="size-3 shrink-0 rounded-full border border-black/20"
           style={{
             backgroundColor: hex,
-            boxShadow: compact ? undefined : `0 0 12px ${hex}66`,
           }}
         />
       )}
       <span className="min-w-0">
-        {!compact && (
-          <span className="block text-[10px] font-normal text-muted-foreground">
-            {t("fanlightColor")}
-          </span>
-        )}
         <span className="block truncate">{name || t("fanlightUnset")}</span>
       </span>
     </Badge>

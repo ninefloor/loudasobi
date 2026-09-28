@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAtom } from "jotai";
+import { volumeAtom } from "@/atoms/player";
 import { createPlaybackClock } from "./playbackClock";
 
 export function usePlayback() {
@@ -18,7 +20,7 @@ export function usePlayback() {
   const [ready, setReady] = useState(false);
   const [buffering, setBuffering] = useState(false);
   const [playerKey, setPlayerKey] = useState(0);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useAtom(volumeAtom);
   const [error, setError] = useState<"playError" | "loadError" | null>(null);
 
   const sync = useCallback(

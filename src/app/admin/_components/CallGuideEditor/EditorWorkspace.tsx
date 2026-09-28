@@ -5,13 +5,11 @@ import { messages } from "@/i18n/messages";
 import { locales, localeNames, type Locale } from "@/i18n/config";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Label } from "@/components/ui/label";
 import {
   NativeSelect,
   NativeSelectOption,
 } from "@/components/ui/native-select";
 import { GuidePreview } from "@/components/player/GuidePreview";
-import { callLabels } from "@/components/player/GuidePreview/guideStyles";
 import type { Playback } from "@/components/player/MusicExperience/usePlayback";
 import type { LyricTrack, CallSection } from "@/types/lyric";
 import type { Music } from "@/types/music";
@@ -35,6 +33,10 @@ export function EditorWorkspace({
   playback,
   disabled,
   onChange,
+  selected,
+  onSelect,
+  loop,
+  onLoopChange,
 }: {
   music: Music;
   track: LyricTrack;
@@ -44,13 +46,15 @@ export function EditorWorkspace({
   playback: Playback;
   disabled: boolean;
   onChange: (guide: CallGuide) => void;
+  selected: string | null;
+  onSelect: (id: string | null) => void;
+  loop: boolean;
+  onLoopChange: (value: boolean) => void;
 }) {
   useEditorShortcuts(playback);
-  const [selected, setSelected] = useState<string | null>(null);
   const [selectedLines, setSelectedLines] = useState<number[]>([]);
   const [preview, setPreview] = useState(false);
   const [previewLocale, setPreviewLocale] = useState<Locale>("ko");
-  const [loop, setLoop] = useState(false);
   const loopSeeking = useRef(false);
   const cue = guide.cues.find((item) => item.id === selected);
   const newDuration = 480 / (music.bpm ?? 120);
@@ -96,12 +100,12 @@ export function EditorWorkspace({
       pattern: defaultPulsePattern(music.bpm),
     };
     onChange({ version: 2, cues: [...guide.cues, next] });
-    setSelected(next.id);
-    setLoop(false);
+    onSelect(next.id);
+    onLoopChange(false);
   }
   function select(id: string) {
-    setSelected(id);
-    setLoop(false);
+    onSelect(id);
+    onLoopChange(false);
   }
   const selectedSource = selectedLines.map((index) => track.lyric[index]);
   return (
@@ -224,30 +228,6 @@ export function EditorWorkspace({
           />
         )}
         <ScrollArea className="h-[38%] min-h-0 shrink-0 border-t lg:h-auto lg:w-[360px] lg:border-t-0 lg:border-l">
-          <div className="space-y-2 border-b p-3">
-            <Label htmlFor="selected-cue">
-              블록 선택 ({guide.cues.length})
-            </Label>
-            <NativeSelect
-              id="selected-cue"
-              value={cue?.id ?? ""}
-              className="w-full"
-              onChange={(event) => select(event.target.value)}
-            >
-              <NativeSelectOption value="">
-                블록을 선택하세요
-              </NativeSelectOption>
-              {guide.cues.map((item) => (
-                <NativeSelectOption key={item.id} value={item.id}>
-                  {(item.start + track.sync).toFixed(2)}초 ·{" "}
-                  {callLabels[item.type]} {issues[item.id] ? "⚠" : ""}{" "}
-                  {item.type === "chant"
-                    ? (item.labels?.ko ?? item.label)
-                    : item.label}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
-          </div>
           {cue ? (
             <CueInspector
               cue={cue}
@@ -269,12 +249,12 @@ export function EditorWorkspace({
                   version: 2,
                   cues: guide.cues.filter((item) => item.id !== cue.id),
                 });
-                setSelected(null);
-                setLoop(false);
+                onSelect(null);
+                onLoopChange(false);
               }}
               loop={loop}
               onLoop={() => {
-                setLoop(!loop);
+                onLoopChange(!loop);
                 if (!loop)
                   playback.seek(Math.max(0, cue.start + track.sync - 1), true);
               }}

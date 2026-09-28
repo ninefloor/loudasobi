@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/badge";
+import { callBadgeStyles } from "./guideStyles";
 import { memo } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -11,6 +13,8 @@ export const LyricRow = memo(function LyricRow({
   locale,
   sections,
   active,
+  badges,
+  activeSectionIds,
   ready,
   onSeek,
 }: {
@@ -19,6 +23,8 @@ export const LyricRow = memo(function LyricRow({
   locale: LyricLocale;
   sections: CallSection[];
   active: boolean;
+  badges: CallSection[];
+  activeSectionIds: Set<string>;
   ready: boolean;
   onSeek: (index: number) => void;
 }) {
@@ -35,10 +41,37 @@ export const LyricRow = memo(function LyricRow({
   }
   return (
     <div data-line-index={index} className="relative">
+      {badges.length > 0 && (
+        <div className="pointer-events-none absolute left-2 top-1/2 z-20 flex w-max min-w-14 max-w-[40%] -translate-y-1/2 flex-col items-start gap-2 sm:left-3">
+          {badges.map((section) => (
+            <Badge
+              key={section.id}
+              variant="outline"
+              data-active={activeSectionIds.has(section.id)}
+              className={cn(
+                "h-6 min-w-14 max-w-full gap-1.5 whitespace-nowrap px-2 py-1 transition-colors motion-reduce:transition-none",
+                callBadgeStyles[section.type],
+              )}
+            >
+              {activeSectionIds.has(section.id) && (
+                <span
+                  aria-hidden="true"
+                  className="size-1.5 shrink-0 rounded-full bg-current"
+                />
+              )}
+              <span className="min-w-0 truncate">
+                {section.type === "chant"
+                  ? section.labels?.[locale] || section.label
+                  : `${t(section.type)}${(section.labels?.[locale] ?? section.label) ? ` · ${section.labels?.[locale] ?? section.label}` : ""}`}
+              </span>
+            </Badge>
+          ))}
+        </div>
+      )}
       {chants.length > 0 && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-1 z-10 flex w-16 flex-col items-center justify-center gap-2 sm:left-2 sm:w-20"
+          className="pointer-events-none absolute inset-y-0 right-1 z-10 flex w-16 flex-col items-center justify-center gap-2 sm:right-2 sm:w-20"
         >
           {chants.map((section) => (
             <span
@@ -62,7 +95,7 @@ export const LyricRow = memo(function LyricRow({
         className={cn(
           "block w-full px-4 py-4 sm:py-5 text-center transition-[background-color,color,box-shadow] duration-(--motion-lyric) enabled:cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
           active
-            ? "bg-[var(--guide-active-bg,var(--accent))] text-[color:var(--guide-active-text,var(--accent-foreground))] shadow-[inset_3px_0_0_var(--guide-color,var(--primary))]"
+            ? "bg-black/[0.04] text-foreground shadow-[inset_3px_0_0_rgb(0_0_0/0.18)] dark:bg-white/[0.07] dark:shadow-[inset_3px_0_0_rgb(255_255_255/0.25)]"
             : "enabled:hover:bg-muted/50",
         )}
       >

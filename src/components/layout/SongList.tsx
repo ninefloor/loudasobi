@@ -9,13 +9,8 @@ import { FanLightBadge } from "@/components/common/FanLightBadge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import type { SidebarLayout } from "@/lib/sidebarOrder";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import type { Locale } from "@/i18n/config";
 
 let savedScrollTop = 0;
 
@@ -35,7 +30,7 @@ export function SongList({
   onSelect: (id: number) => void;
 }) {
   const t = useTranslations();
-  const locale = useLocale();
+  const locale = useLocale() as Locale;
   const scrollRef = useRef<HTMLDivElement>(null);
   const entries = new Map(catalog.map((entry) => [entry.music.id, entry]));
   const items: (CatalogEntry | { group: string; name: string })[] =
@@ -45,7 +40,10 @@ export function SongList({
           ...layout.groups.flatMap((group) =>
             group.musicIds.length
               ? [
-                  { group: group.id, name: group.name },
+                  {
+                    group: group.id,
+                    name: group.name[locale] || group.name.ko,
+                  },
                   ...group.musicIds.flatMap((id) =>
                     entries.has(id) ? [entries.get(id)!] : [],
                   ),
@@ -66,23 +64,30 @@ export function SongList({
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="shrink-0 border-b p-3">
-        <Select
-          value={sort}
-          onValueChange={(value) => {
-            onSort(value as "recommended" | "release");
-            savedScrollTop = 0;
-            if (scrollRef.current) scrollRef.current.scrollTop = 0;
-          }}
+      <div className="flex shrink-0 justify-end border-b p-3">
+        <div
+          role="group"
+          aria-label={t("songSort")}
+          className="inline-flex gap-1 rounded-lg border bg-muted/40 p-1"
         >
-          <SelectTrigger className="w-full" aria-label={t("songSort")}>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent position="popper">
-            <SelectItem value="recommended">{t("recommendedSort")}</SelectItem>
-            <SelectItem value="release">{t("releaseSort")}</SelectItem>
-          </SelectContent>
-        </Select>
+          {(["recommended", "release"] as const).map((value) => (
+            <Button
+              key={value}
+              type="button"
+              size="xs"
+              variant={sort === value ? "default" : "ghost"}
+              aria-pressed={sort === value}
+              onClick={() => {
+                if (sort === value) return;
+                onSort(value);
+                savedScrollTop = 0;
+                if (scrollRef.current) scrollRef.current.scrollTop = 0;
+              }}
+            >
+              {t(value === "recommended" ? "recommendedSort" : "releaseSort")}
+            </Button>
+          ))}
+        </div>
       </div>
       <ScrollArea
         className="min-h-0 flex-1"

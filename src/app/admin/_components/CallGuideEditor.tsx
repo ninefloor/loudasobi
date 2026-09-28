@@ -13,6 +13,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
+import { callLabels } from "@/components/player/GuidePreview/guideStyles";
 import { EditorThemeMenu } from "./CallGuideEditor/EditorThemeMenu";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -41,6 +46,12 @@ export function CallGuideEditor({
   });
   const { guide, syncOffset } = history.draft;
   const [busy, setBusy] = useState(false);
+  const [selectedCue, setSelectedCue] = useState<string | null>(null);
+  const [loop, setLoop] = useState(false);
+  function selectCue(id: string | null) {
+    setSelectedCue(id);
+    setLoop(false);
+  }
   const [message, setMessage] = useState("");
   const dirty =
     JSON.stringify(guide) !== JSON.stringify(saved.guide) ||
@@ -167,6 +178,27 @@ export function CallGuideEditor({
                 : "모든 변경 저장됨"}
           </p>
         </div>
+        <NativeSelect
+          aria-label={`블록 선택 (${guide.cues.length})`}
+          className="w-full sm:w-64"
+          value={
+            guide.cues.some((cue) => cue.id === selectedCue) ? selectedCue! : ""
+          }
+          onChange={(event) => selectCue(event.target.value || null)}
+        >
+          <NativeSelectOption value="">
+            블록 선택 ({guide.cues.length})
+          </NativeSelectOption>
+          {guide.cues.map((item) => (
+            <NativeSelectOption key={item.id} value={item.id}>
+              {(item.start + track.sync).toFixed(2)}초 · {callLabels[item.type]}{" "}
+              {resolved.issues[item.id] ? "⚠" : ""}{" "}
+              {item.type === "chant"
+                ? (item.labels?.ko ?? item.label)
+                : item.label}
+            </NativeSelectOption>
+          ))}
+        </NativeSelect>
         <div className="flex items-center gap-1 border-r pr-3">
           <Button
             size="icon"
@@ -285,6 +317,10 @@ export function CallGuideEditor({
         editorOnly
         editor={(playback) => (
           <EditorWorkspace
+            selected={selectedCue}
+            onSelect={selectCue}
+            loop={loop}
+            onLoopChange={setLoop}
             music={saved.music}
             track={track}
             guide={guide}
