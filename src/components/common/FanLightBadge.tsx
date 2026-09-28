@@ -31,13 +31,13 @@ export function FanLightBadge({
         <Badge
           variant="outline"
           aria-hidden="true"
-          className="h-7 w-10 rounded-lg border-black/15 dark:border-white/25"
+          className="h-[clamp(1.25rem,4cqi,1.75rem)] w-[clamp(1.75rem,6cqi,2.5rem)] rounded-lg border-black/15 dark:border-white/25"
           style={{
             backgroundColor: hex,
             boxShadow: hex ? `0 0 10px ${hex}33` : undefined,
           }}
         />
-        <span className="max-w-full text-center text-[10px] font-medium leading-tight text-muted-foreground">
+        <span className="max-w-full break-words text-center text-[clamp(0.5625rem,0.5rem+0.3125cqi,0.6875rem)] font-medium leading-tight text-muted-foreground">
           {name || t("fanlightUnset")}
         </span>
       </span>

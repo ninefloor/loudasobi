@@ -81,22 +81,25 @@ export function GuidePreview({
 
   return (
     <section
-      className="flex min-h-0 flex-1 flex-col overflow-hidden"
+      className="@container flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
       aria-labelledby="song-title"
     >
       <header className="shrink-0 border-b bg-background px-4 py-2 sm:px-6">
-        <div className="mx-auto grid max-w-[720px] grid-cols-[64px_minmax(0,1fr)_64px] items-center gap-x-2 gap-y-1.5">
+        <div className="mx-auto grid max-w-[720px] grid-cols-[clamp(3.5rem,10cqi,4rem)_minmax(0,1fr)_clamp(3.5rem,10cqi,4rem)] items-center gap-x-2 gap-y-1.5">
           <FanLightBadge color={music.fanLightColor} />
           <div className="min-w-0 text-center">
             <h1
               id="song-title"
-              className="text-lg font-semibold leading-snug break-words"
+              className="text-[clamp(0.9375rem,0.8125rem+0.625cqi,1.125rem)] font-semibold leading-snug break-words"
               lang="ja"
             >
               {music.title}
             </h1>
             {locale !== "ja" && (
-              <p lang={locale} className="mt-0.5 text-xs text-muted-foreground">
+              <p
+                lang={locale}
+                className="mt-0.5 break-words text-[clamp(0.6875rem,0.625rem+0.3125cqi,0.75rem)] text-muted-foreground"
+              >
                 {locale === "ko" ? music.korTitle : music.enTitle}
               </p>
             )}
@@ -104,7 +107,10 @@ export function GuidePreview({
           <span aria-hidden="true" />
           <div className="col-span-3 flex h-8 w-full items-center justify-between gap-2 border-t pt-1">
             <div className="flex items-center gap-2.5">
-              <Label htmlFor={followId} className="cursor-pointer text-xs">
+              <Label
+                htmlFor={followId}
+                className="cursor-pointer text-[clamp(0.6875rem,0.625rem+0.3125cqi,0.75rem)]"
+              >
                 {t("autoFollow")}
               </Label>
               <Switch

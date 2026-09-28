@@ -42,14 +42,14 @@ export const LyricRow = memo(function LyricRow({
   return (
     <div data-line-index={index} className="relative">
       {badges.length > 0 && (
-        <div className="pointer-events-none absolute left-2 top-1/2 z-20 flex w-max min-w-14 max-w-[40%] -translate-y-1/2 flex-col items-start gap-2 sm:left-3">
+        <div className="pointer-events-none absolute left-2 top-1/2 z-20 flex w-max min-w-12 max-w-[clamp(3rem,12cqi,4rem)] -translate-y-1/2 flex-col items-start gap-2 sm:left-3">
           {badges.map((section) => (
             <Badge
               key={section.id}
               variant="outline"
               data-active={activeSectionIds.has(section.id)}
               className={cn(
-                "h-6 min-w-14 max-w-full gap-1.5 whitespace-nowrap px-2 py-1 transition-colors motion-reduce:transition-none",
+                "h-6 min-w-12 max-w-full gap-1 whitespace-nowrap px-1.5 py-1 text-[clamp(0.625rem,0.5625rem+0.3125cqi,0.75rem)] transition-colors motion-reduce:transition-none",
                 callBadgeStyles[section.type],
               )}
             >
@@ -71,13 +71,13 @@ export const LyricRow = memo(function LyricRow({
       {chants.length > 0 && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-1 z-10 flex w-16 flex-col items-center justify-center gap-2 sm:right-2 sm:w-20"
+          className="pointer-events-none absolute inset-y-0 right-1 z-10 flex w-[clamp(3rem,12cqi,4rem)] flex-col items-center justify-center gap-2 sm:right-2"
         >
           {chants.map((section) => (
             <span
               key={section.id}
               data-chant-pulse={section.id}
-              className="block max-w-full break-words text-center text-lg font-extrabold leading-tight text-cyan-600 dark:text-cyan-400 opacity-0 sm:text-xl"
+              className="block max-w-full break-words text-center text-[clamp(0.875rem,0.75rem+0.625cqi,1.25rem)] font-extrabold leading-tight text-cyan-600 dark:text-cyan-400 opacity-0"
             >
               {section.labels?.[locale] || section.label}
             </span>
@@ -93,7 +93,8 @@ export const LyricRow = memo(function LyricRow({
           lyric: line.instrumental ? t("instrumental") : line.jp,
         })}
         className={cn(
-          "block w-full px-4 py-4 sm:py-5 text-center transition-[background-color,color,box-shadow] duration-(--motion-lyric) enabled:cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+          "block w-full px-[clamp(0.5rem,2.5cqi,1.5rem)] py-[clamp(0.875rem,3cqi,1.25rem)] [overflow-wrap:anywhere] text-center transition-[background-color,color,box-shadow] duration-(--motion-lyric) enabled:cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+          sections.length > 0 && "px-[clamp(4rem,12cqi,5rem)]",
           active
             ? "bg-black/[0.04] text-foreground shadow-[inset_3px_0_0_rgb(0_0_0/0.18)] dark:bg-white/[0.07] dark:shadow-[inset_3px_0_0_rgb(255_255_255/0.25)]"
             : "enabled:hover:bg-muted/50",
@@ -102,7 +103,7 @@ export const LyricRow = memo(function LyricRow({
         <span
           lang="ja"
           className={cn(
-            "block text-base leading-relaxed sm:text-lg",
+            "block text-[clamp(0.875rem,0.75rem+0.625cqi,1.125rem)] tracking-[clamp(-0.02em,-0.04em+0.1cqi,0em)] leading-relaxed",
             active ? "font-bold" : "font-medium",
           )}
         >
@@ -113,7 +114,7 @@ export const LyricRow = memo(function LyricRow({
             <span
               lang="ko"
               className={cn(
-                "mt-1.5 block text-base leading-relaxed sm:text-lg",
+                "mt-1.5 block text-[clamp(0.875rem,0.75rem+0.625cqi,1.125rem)] tracking-[clamp(-0.02em,-0.04em+0.1cqi,0em)] leading-relaxed",
                 active ? "font-semibold" : "font-medium",
               )}
             >
@@ -122,7 +123,7 @@ export const LyricRow = memo(function LyricRow({
             <span
               lang="ko"
               className={cn(
-                "mt-2 block text-xs sm:text-sm leading-relaxed",
+                "mt-2 block text-[clamp(0.6875rem,0.625rem+0.3125cqi,0.875rem)] tracking-[clamp(-0.01em,-0.04em+0.1cqi,0em)] leading-relaxed",
                 active ? "text-inherit opacity-80" : "text-muted-foreground",
               )}
             >
@@ -136,7 +137,7 @@ export const LyricRow = memo(function LyricRow({
               <span
                 lang="en"
                 className={cn(
-                  "mt-1.5 block text-base leading-relaxed sm:text-lg",
+                  "mt-1.5 block text-[clamp(0.875rem,0.75rem+0.625cqi,1.125rem)] tracking-[clamp(-0.02em,-0.04em+0.1cqi,0em)] leading-relaxed",
                   active ? "font-semibold" : "font-medium",
                 )}
               >
@@ -147,7 +148,7 @@ export const LyricRow = memo(function LyricRow({
               <span
                 lang="en"
                 className={cn(
-                  "mt-2 block text-xs sm:text-sm leading-relaxed",
+                  "mt-2 block text-[clamp(0.6875rem,0.625rem+0.3125cqi,0.875rem)] tracking-[clamp(-0.01em,-0.04em+0.1cqi,0em)] leading-relaxed",
                   active ? "text-inherit opacity-80" : "text-muted-foreground",
                 )}
               >
