@@ -1,16 +1,16 @@
 "use client";
-import { Minus, Plus } from "lucide-react";
 import {
-  useTimelineZoom,
-  MIN_TIMELINE_SCALE,
-  MAX_TIMELINE_SCALE,
-} from "./useTimelineZoom";
-import { useMemo, useRef, useState } from "react";
-import { useTimelineDrag } from "./useTimelineDrag";
-import { useTimelinePlayback } from "./useTimelinePlayback";
+  callLabels,
+  callStyles,
+} from "@/components/player/GuidePreview/guideStyles";
+import { HighlightedText } from "@/components/player/HighlightedText";
+import type { Playback } from "@/components/player/MusicExperience/usePlayback";
 import { Button } from "@/components/ui/button";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
 import { cuePulses, cueTextSelections, type CallCue } from "@/lib/callGuide";
 import {
   lyricTextFields,
@@ -18,17 +18,17 @@ import {
   lyricTextLang,
   type LyricTextField,
 } from "@/lib/lyricText";
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/components/ui/native-select";
-import { HighlightedText } from "@/components/player/HighlightedText";
+import { cn } from "@/lib/utils";
 import type { LyricLine } from "@/types/lyric";
-import type { Playback } from "@/components/player/MusicExperience/usePlayback";
+import { Minus, Plus } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { useTimelineDrag } from "./useTimelineDrag";
+import { useTimelinePlayback } from "./useTimelinePlayback";
 import {
-  callLabels,
-  callStyles,
-} from "@/components/player/GuidePreview/guideStyles";
+  MAX_TIMELINE_SCALE,
+  MIN_TIMELINE_SCALE,
+  useTimelineZoom,
+} from "./useTimelineZoom";
 
 export function VerticalTimeline({
   lines,
@@ -171,7 +171,7 @@ export function VerticalTimeline({
         </div>
         <div
           ref={canvas}
-          className="relative ml-[60px] mr-2"
+          className="relative ml-15 mr-2"
           style={{ height: (bottom - origin) * scale }}
           onPointerMove={move}
           onPointerUp={finish}
@@ -188,7 +188,7 @@ export function VerticalTimeline({
               >
                 <button
                   type="button"
-                  className="pointer-events-auto absolute -left-[60px] z-10 flex w-[60px] cursor-pointer select-none items-start justify-center text-xs tabular-nums text-muted-foreground hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-default"
+                  className="pointer-events-auto absolute -left-15 z-10 flex w-15 cursor-pointer select-none items-start justify-center text-xs tabular-nums text-muted-foreground hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-default"
                   style={{ height: Math.min(2, bottom - time) * scale }}
                   aria-label={`${time.toFixed(2)}초로 이동`}
                   disabled={!playback.ready}
