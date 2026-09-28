@@ -1,4 +1,6 @@
 const ko = {
+  settingsHelp: "편하게 따라 부를 수 있도록 화면을 설정하세요.",
+  languageHelp: "메뉴와 가사 번역·발음 표시에 함께 적용됩니다.",
   buffering: "버퍼링 중",
   readyToPlay: "재생 준비 완료",
   paused: "일시정지됨",
@@ -38,14 +40,16 @@ const ko = {
   playError: "재생을 시작하지 못했습니다. 재생 버튼을 다시 눌러 주세요.",
   loadError:
     "음원을 불러오지 못했습니다. 네트워크 또는 YouTube 재생 제한을 확인해 주세요.",
-  fanlightUnset: "팬라이트 미지정",
+  fanlightColor: "킹블레이드",
+  autoFollow: "자동 따라가기",
+  followPausedStatus: "일시 중단",
+  fanlightUnset: "킹블레이드 미지정",
   followFollowing: "자동 따라가기 · 켜짐",
   followOff: "자동 따라가기 · 꺼짐",
   currentLyric: "현재 가사로",
   followPaused: "자동 따라가기 · 일시 중단",
-  jumpCalls: "콜 구간 바로가기",
   allLyrics: "전체 가사",
-  guideHelp: "가사 또는 구간 버튼을 누르면 해당 위치부터 재생합니다.",
+  guideHelp: "가사를 누르면 해당 위치부터 재생합니다.",
   guidePending: "콜 가이드 준비 중 · 현재는 가사만 제공합니다.",
   translationPending:
     "일부 가사의 번역 또는 음독을 준비 중입니다. 제공된 자료만 표시합니다.",
@@ -53,11 +57,13 @@ const ko = {
   noLyricsHelp: "가사 자료가 등록되면 이곳에 표시됩니다.",
   seekLyric: "{lyric} — 이 가사부터 재생",
   clap: "박수",
-  chant: "콜",
+  chant: "챈트",
   singalong: "떼창",
 };
 type Messages = Record<keyof typeof ko, string>;
 const ja: Messages = {
+  settingsHelp: "歌いやすい表示に整えましょう。",
+  languageHelp: "メニューと歌詞の翻訳・読み方に適用されます。",
   buffering: "バッファリング中",
   readyToPlay: "再生準備完了",
   paused: "一時停止中",
@@ -97,14 +103,16 @@ const ja: Messages = {
   playError: "再生を開始できませんでした。もう一度再生ボタンを押してください。",
   loadError:
     "音源を読み込めませんでした。ネットワークやYouTubeの再生制限をご確認ください。",
+  fanlightColor: "ペンライト",
+  autoFollow: "自動スクロール",
+  followPausedStatus: "一時停止",
   fanlightUnset: "ペンライトの色は未設定",
   followFollowing: "自動スクロール · オン",
   followOff: "自動スクロール · オフ",
   currentLyric: "現在の歌詞へ",
   followPaused: "自動スクロール · 一時停止",
-  jumpCalls: "コール区間へ移動",
   allLyrics: "歌詞一覧",
-  guideHelp: "歌詞や区間ボタンを押すと、その位置から再生します。",
+  guideHelp: "歌詞を押すと、その位置から再生します。",
   guidePending: "コールガイド準備中 · 現在は歌詞のみ表示しています。",
   translationPending:
     "一部の歌詞の翻訳・読み方は準備中です。登録済みの内容のみ表示します。",
@@ -112,10 +120,13 @@ const ja: Messages = {
   noLyricsHelp: "歌詞が登録されると、ここに表示されます。",
   seekLyric: "{lyric} — この歌詞から再生",
   clap: "手拍子",
-  chant: "コール",
+  chant: "チャント",
   singalong: "一緒に歌う",
 };
 const en: Messages = {
+  settingsHelp: "Make yourself comfortable and sing along.",
+  languageHelp:
+    "Applies to menus, lyric translations and pronunciation guides.",
   buffering: "Buffering",
   readyToPlay: "Ready to play",
   paused: "Paused",
@@ -155,14 +166,16 @@ const en: Messages = {
   playError: "Could not start playback. Please press play again.",
   loadError:
     "Could not load audio. Check your connection or YouTube playback restrictions.",
+  fanlightColor: "Penlight",
+  autoFollow: "Auto-scroll",
+  followPausedStatus: "Paused",
   fanlightUnset: "No penlight color set",
   followFollowing: "Auto-scroll · On",
   followOff: "Auto-scroll · Off",
   currentLyric: "Current lyric",
   followPaused: "Auto-scroll · Paused",
-  jumpCalls: "Jump to a call section",
   allLyrics: "All lyrics",
-  guideHelp: "Select a lyric or section to play from that point.",
+  guideHelp: "Select a lyric to play from that point.",
   guidePending: "Call guide coming soon · Only lyrics are currently available.",
   translationPending:
     "Some translations or pronunciation guides are not available yet. Only available content is shown.",
@@ -170,7 +183,7 @@ const en: Messages = {
   noLyricsHelp: "Lyrics will appear here when they are added.",
   seekLyric: "{lyric} — Play from this lyric",
   clap: "Clap",
-  chant: "Call",
+  chant: "Chant",
   singalong: "Sing along",
 };
 export const messages = { ko, ja, en };

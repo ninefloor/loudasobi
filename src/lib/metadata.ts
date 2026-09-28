@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { Locale } from "@/i18n/config";
 
 const description =
-  "YOASOBI 노래의 가사와 함께 박수, 콜, 떼창을 연습하는 팬 가이드";
+  "YOASOBI 노래의 가사와 함께 박수, 챈트, 떼창을 연습하는 팬 가이드";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 export const siteMetadata: Metadata = {
@@ -25,8 +25,8 @@ export const siteMetadata: Metadata = {
 export function localizedMetadata(locale: Locale): Metadata {
   const descriptions = {
     ko: description,
-    ja: "YOASOBIの歌詞に合わせて手拍子・コール・一緒に歌うパートを練習するファンガイド",
-    en: "A fan guide to practicing claps, calls, and sing-along parts with YOASOBI lyrics",
+    ja: "YOASOBIの歌詞に合わせて手拍子・チャント・一緒に歌うパートを練習するファンガイド",
+    en: "A fan guide to practicing claps, chants, and sing-along parts with YOASOBI lyrics",
   };
   const translated = descriptions[locale];
   return {

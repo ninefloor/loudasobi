@@ -23,6 +23,7 @@ export const LyricRow = memo(function LyricRow({
   onSeek: (index: number) => void;
 }) {
   const t = useTranslations();
+  const chants = sections.filter((section) => section.type === "chant");
   function highlighted(field: LyricTextField) {
     const ranges = sections.flatMap((s) => [
       ...(field === "jp" && s.selection?.line === index ? [s.selection] : []),
@@ -33,7 +34,23 @@ export const LyricRow = memo(function LyricRow({
     return <HighlightedText text={line[field] ?? ""} ranges={ranges} />;
   }
   return (
-    <div data-line-index={index}>
+    <div data-line-index={index} className="relative">
+      {chants.length > 0 && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-1 z-10 flex w-16 flex-col items-center justify-center gap-2 sm:left-2 sm:w-20"
+        >
+          {chants.map((section) => (
+            <span
+              key={section.id}
+              data-chant-pulse={section.id}
+              className="block max-w-full break-words text-center text-lg font-extrabold leading-tight text-cyan-600 dark:text-cyan-400 opacity-0 sm:text-xl"
+            >
+              {section.labels?.[locale] || section.label}
+            </span>
+          ))}
+        </span>
+      )}
       <button
         type="button"
         disabled={!ready}

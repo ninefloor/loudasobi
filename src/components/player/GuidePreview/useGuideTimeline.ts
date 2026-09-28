@@ -39,10 +39,13 @@ export function useGuideTimeline(
       ).sort((a, b) => a - b),
     [sections],
   );
-  const snapshot = useCallback(
-    () => activeLineAt(lines, starts, clock.read().time - offset),
-    [clock, lines, starts, offset],
-  );
+  const snapshot = useCallback(() => {
+    const time = clock.read().time - offset;
+    const activeSections = sections.flatMap((section, index) =>
+      section.start <= time && time < section.end ? [index] : [],
+    );
+    return `${activeLineAt(lines, starts, time)}|${activeSections.join(",")}`;
+  }, [clock, lines, starts, sections, offset]);
   const subscribe = useCallback(
     (notify: () => void) => {
       let previous = snapshot();
@@ -56,11 +59,19 @@ export function useGuideTimeline(
     },
     [clock, snapshot],
   );
-  const activeIndex = useSyncExternalStore(subscribe, snapshot, () => -1);
+  const state = useSyncExternalStore(subscribe, snapshot, () => "-1|");
+  const [lineState, sectionState] = state.split("|");
+  const activeIndex = Number(lineState);
+  const activeSectionIds = new Set(
+    sectionState
+      ? sectionState.split(",").map((index) => sections[Number(index)].id)
+      : [],
+  );
 
   useEffect(() => {
     let previousTime = clock.read().time - offset;
     let animation: Animation | null = null;
+    let chantAnimations: Animation[] = [];
     let animatedLine = -1;
     let animatedBlock: HTMLElement | null = null;
     const blockAt = (index: number) =>
@@ -70,6 +81,8 @@ export function useGuideTimeline(
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const cancel = () => {
       animation?.cancel();
+      chantAnimations.forEach((item) => item.cancel());
+      chantAnimations = [];
       animation = null;
       animatedLine = -1;
       animatedBlock = null;
@@ -91,7 +104,11 @@ export function useGuideTimeline(
       const lineIndex = activeLineAt(lines, starts, time);
       if (animatedBlock && animatedLine !== lineIndex) {
         if (blockAt(lineIndex) !== animatedBlock) cancel();
-        else animatedLine = lineIndex;
+        else {
+          chantAnimations.forEach((item) => item.cancel());
+          chantAnimations = [];
+          animatedLine = lineIndex;
+        }
       }
       const hitIndex = upperBound(hits, time) - 1;
       const hit = hits[hitIndex];
@@ -104,30 +121,71 @@ export function useGuideTimeline(
       cancel();
       animatedLine = lineIndex;
       animatedBlock = block;
+      const pulsing = (sectionByLine[lineIndex] ?? []).filter(
+        (section) =>
+          section.type !== "singalong" &&
+          section.start <= hit &&
+          hit < section.end &&
+          section.pulseTimes.includes(hit),
+      );
+      const chanting = new Set(
+        pulsing
+          .filter((section) => section.type === "chant")
+          .map((section) => section.id),
+      );
+      const colors = [
+        ...new Set(
+          pulsing.map((section) =>
+            section.type === "chant" ? "var(--cyan-500)" : "var(--yellow-600)",
+          ),
+        ),
+      ];
+      if (!colors.length) return;
+      const fills = colors.map(
+        (color) => `color-mix(in oklch, ${color} 14%, transparent)`,
+      );
+      overlay.style.backgroundImage = `linear-gradient(110deg, ${fills.length === 1 ? `${fills[0]}, ${fills[0]}` : fills.join(", ")})`;
+      const border = colors
+        .map((color, index) => `inset 0 0 0 ${(index + 1) * 2}px ${color}`)
+        .join(", ");
+      block
+        .querySelectorAll<HTMLElement>(
+          `[data-line-index="${lineIndex}"] [data-chant-pulse]`,
+        )
+        .forEach((text) => {
+          if (!chanting.has(text.dataset.chantPulse ?? "")) return;
+          chantAnimations.push(
+            text.animate(
+              reduced.matches
+                ? [{ opacity: 1 }, { opacity: 0 }]
+                : [
+                    { opacity: 0, transform: "translateY(5px) scale(0.85)" },
+                    {
+                      opacity: 1,
+                      transform: "translateY(0) scale(1.15)",
+                      offset: 0.2,
+                    },
+                    {
+                      opacity: 1,
+                      transform: "translateY(-2px) scale(1.15)",
+                      offset: 0.55,
+                    },
+                    { opacity: 0, transform: "translateY(-10px) scale(1.2)" },
+                  ],
+              { duration: reduced.matches ? 180 : 420, easing: "ease-out" },
+            ),
+          );
+        });
       animation = overlay.animate(
-        reduced.matches
-          ? [
-              {
-                outline: "2px solid var(--guide-color, var(--primary))",
-                outlineOffset: "-2px",
-              },
-              { outline: "2px solid transparent", outlineOffset: "-2px" },
-            ]
-          : [
-              {
-                boxShadow:
-                  "inset 0 0 0 2px var(--guide-color, var(--primary)), inset 0 0 16px 2px color-mix(in oklch, var(--guide-color, var(--primary)) 22%, transparent)",
-              },
-              {
-                boxShadow:
-                  "inset 0 0 0 2px var(--guide-color, var(--primary)), inset 0 0 16px 2px color-mix(in oklch, var(--guide-color, var(--primary)) 22%, transparent)",
-                offset: 0.35,
-              },
-              {
-                boxShadow:
-                  "inset 0 0 0 2px transparent, inset 0 0 16px 2px transparent",
-              },
-            ],
+        [
+          { opacity: reduced.matches ? 0.5 : 1, boxShadow: border },
+          {
+            opacity: reduced.matches ? 0.5 : 1,
+            boxShadow: border,
+            offset: 0.35,
+          },
+          { opacity: 0, boxShadow: border },
+        ],
         { duration: reduced.matches ? 180 : 380, easing: "ease-out" },
       );
     });
@@ -136,7 +194,16 @@ export function useGuideTimeline(
       cancel();
       reduced.removeEventListener("change", cancel);
     };
-  }, [clock, lines, starts, hits, offset, viewportRef]);
+  }, [
+    clock,
+    lines,
+    starts,
+    hits,
+    sections,
+    sectionByLine,
+    offset,
+    viewportRef,
+  ]);
 
-  return { activeIndex, sectionByLine };
+  return { activeIndex, activeSectionIds, sectionByLine };
 }

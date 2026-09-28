@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight, ListMusic, Search } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import type { AdminMusic } from "@/types/catalog";
 import { AdminAuthForm } from "./AdminAuthForm";
 import { MusicSettingsForm } from "./MusicSettingsForm";
@@ -39,14 +42,37 @@ export function AdminMusicManager({
   }
   return (
     <main className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
-      <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b px-5 py-3">
-        <div>
-          <h1 className="font-semibold">loudasobi 곡 관리</h1>
-          <p className="text-xs text-muted-foreground">
-            {readOnly ? "열람 전용" : "관리자"} · {musics.length}곡
-          </p>
+      <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b bg-card px-4 py-3 sm:px-6">
+        <div className="flex items-center gap-3">
+          <Button asChild variant="ghost" size="icon" className="shrink-0">
+            <Link
+              href="/"
+              aria-label="공개 화면으로 돌아가기"
+              title="공개 화면으로 돌아가기"
+              onNavigate={(event) => {
+                if (
+                  saving ||
+                  (dirty &&
+                    !window.confirm(
+                      "저장하지 않은 곡 설정을 버리고 공개 화면으로 이동할까요?",
+                    ))
+                )
+                  event.preventDefault();
+              }}
+            >
+              <ChevronLeft className="size-5" />
+            </Link>
+          </Button>
+          <Separator orientation="vertical" className="h-6!" />
+          <div>
+            <p className="text-xs text-muted-foreground">loudasobi</p>
+            <h1 className="text-sm font-semibold">곡 관리</h1>
+          </div>
+          <Badge variant="secondary" className="hidden sm:inline-flex">
+            {readOnly ? "열람 전용" : "관리자"}
+          </Badge>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm">
             <Link
               href="/admin/sidebar"
@@ -61,32 +87,43 @@ export function AdminMusicManager({
                   event.preventDefault();
               }}
             >
-              사이드바 · 추천 정렬
+              <ListMusic className="size-4" />
+              추천 정렬
             </Link>
           </Button>
-          <Link href="/" className="text-sm text-primary">
-            공개 화면
-          </Link>
           <AdminAuthForm authenticated />
         </div>
       </header>
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
         <aside
-          className="flex h-[35dvh] shrink-0 flex-col border-b md:h-auto md:w-80 md:border-r md:border-b-0"
+          className="flex h-[30dvh] shrink-0 flex-col border-b bg-card md:h-auto md:w-72 md:border-r md:border-b-0 lg:w-80"
           aria-label="관리할 곡"
         >
-          <div className="p-3">
-            <Input
-              type="search"
-              aria-label="곡 검색"
-              placeholder="곡 제목 검색"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              className="h-9"
-            />
+          <div className="space-y-3 p-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-semibold">곡 목록</h2>
+              <span className="text-xs tabular-nums text-muted-foreground">
+                {query ? `${visible.length} / ${musics.length}` : musics.length}
+                곡
+              </span>
+            </div>
+            <div className="relative">
+              <Search
+                aria-hidden="true"
+                className="pointer-events-none absolute top-2.5 left-3 size-4 text-muted-foreground"
+              />
+              <Input
+                type="search"
+                aria-label="곡 검색"
+                placeholder="곡 제목 검색"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                className="h-9 bg-background pl-9"
+              />
+            </div>
           </div>
           <ScrollArea
-            className="min-h-0 flex-1"
+            className="min-h-0 flex-1 px-2 pb-2"
             viewportProps={{
               role: "navigation",
               "aria-label": "관리할 곡 목록",
@@ -100,20 +137,41 @@ export function AdminMusicManager({
                 onClick={() => select(music.id)}
                 aria-current={selectedId === music.id ? "true" : undefined}
                 className={cn(
-                  "flex w-full cursor-pointer flex-col gap-1 border-l-2 border-transparent px-4 py-3 text-left hover:bg-accent",
-                  selectedId === music.id && "border-l-primary bg-accent",
+                  "group mb-1 flex w-full cursor-pointer items-center gap-3 rounded-lg border border-transparent px-3 py-3 text-left transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50",
+                  selectedId === music.id && "border-border bg-accent",
                 )}
               >
-                <span lang="ja" className="text-sm font-medium">
-                  {music.title}
+                <span className="min-w-0 flex-1 space-y-1.5">
+                  <span
+                    lang="ja"
+                    className="block truncate text-sm font-medium"
+                  >
+                    {music.title}
+                  </span>
+                  <span className="block truncate text-xs text-muted-foreground">
+                    {music.korTitle}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Badge
+                      variant={music.publish ? "secondary" : "outline"}
+                      className="text-[10px]"
+                    >
+                      {music.publish ? "공개" : "비공개"}
+                    </Badge>
+                    {!music.hasLyrics && (
+                      <span className="text-[11px] text-muted-foreground">
+                        가사 준비 중
+                      </span>
+                    )}
+                  </span>
                 </span>
-                <span className="text-xs text-muted-foreground">
-                  {music.korTitle}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {music.publish ? "공개" : "비공개"} ·{" "}
-                  {music.hasLyrics ? "가사 연결" : "가사 준비 중"}
-                </span>
+                <ChevronRight
+                  aria-hidden="true"
+                  className={cn(
+                    "size-4 shrink-0 text-muted-foreground/40",
+                    selectedId === music.id && "text-foreground",
+                  )}
+                />
               </button>
             ))}
             {!visible.length && (
@@ -123,13 +181,10 @@ export function AdminMusicManager({
             )}
           </ScrollArea>
         </aside>
-        <ScrollArea
-          className="min-h-0 min-w-0 flex-1"
-          viewportProps={{
-            role: "region",
-            "aria-label": "곡 설정",
-            tabIndex: 0,
-          }}
+        <div
+          className="flex min-h-0 min-w-0 flex-1 flex-col bg-muted/30"
+          role="region"
+          aria-label="곡 설정"
         >
           {selected ? (
             <MusicSettingsForm
@@ -151,7 +206,7 @@ export function AdminMusicManager({
               MONOASOBI에 곡을 추가하면 이곳에 자동으로 표시됩니다.
             </p>
           )}
-        </ScrollArea>
+        </div>
       </div>
     </main>
   );

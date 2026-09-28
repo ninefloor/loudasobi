@@ -1,4 +1,10 @@
 "use client";
+import { Minus, Plus } from "lucide-react";
+import {
+  useTimelineZoom,
+  MIN_TIMELINE_SCALE,
+  MAX_TIMELINE_SCALE,
+} from "./useTimelineZoom";
 import { useMemo, useRef, useState } from "react";
 import { useTimelineDrag } from "./useTimelineDrag";
 import { useTimelinePlayback } from "./useTimelinePlayback";
@@ -49,10 +55,10 @@ export function VerticalTimeline({
   onCreate: (start: number, end: number) => void;
   onChange: (cue: CallCue) => void;
 }) {
-  const [scale, setScale] = useState(48);
-  const [textField, setTextField] = useState<LyricTextField>("kr");
+  const [textField, setTextField] = useState<LyricTextField>("jpReading");
   const viewport = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLDivElement>(null);
+  const { scale, zoom } = useTimelineZoom(viewport, canvas);
   const selectionAnchor = useRef(0);
   const bottom =
     Math.max(
@@ -102,33 +108,29 @@ export function VerticalTimeline({
       });
     return { indexes, count: Math.max(1, ends.length) };
   }, [cues]);
-  function zoom(next: number) {
-    const node = viewport.current;
-    const time = node ? (node.scrollTop + node.clientHeight / 2) / scale : 0;
-    setScale(next);
-    requestAnimationFrame(() => {
-      if (node) node.scrollTop = time * next - node.clientHeight / 2;
-    });
-  }
   return (
     <section className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
       <div className="flex shrink-0 flex-wrap items-center gap-2 border-b p-2">
         <Button
           size="xs"
           variant="outline"
-          disabled={scale <= 24}
-          onClick={() => zoom(Math.max(24, scale - 12))}
+          aria-label="축소"
+          title="축소"
+          disabled={scale <= MIN_TIMELINE_SCALE}
+          onClick={() => zoom(scale / 1.25)}
         >
-          축소
+          <Minus className="size-4" />
         </Button>
         <span className="text-xs">{scale}px/초</span>
         <Button
           size="xs"
           variant="outline"
-          disabled={scale >= 144}
-          onClick={() => zoom(Math.min(144, scale + 12))}
+          aria-label="확대"
+          title="확대"
+          disabled={scale >= MAX_TIMELINE_SCALE}
+          onClick={() => zoom(scale * 1.25)}
         >
-          확대
+          <Plus className="size-4" />
         </Button>
         <Button
           size="xs"
@@ -157,8 +159,8 @@ export function VerticalTimeline({
           ))}
         </NativeSelect>
         <span className="text-xs text-muted-foreground">
-          시간 눈금 클릭으로 탐색 / 가사 클릭·Shift 선택 / 빈 콜 영역 드래그로
-          생성 / 블록 드래그로 이동 · 위아래 손잡이로 길이 조절
+          ⌘/Ctrl + 드래그·스크롤: 확대/축소 / 가사 Shift 선택 / 빈 콜 영역
+          드래그: 추가 / 블록 드래그: 이동
         </span>
       </div>
       <ScrollArea className="min-h-0 flex-1" viewportRef={viewport}>
@@ -287,7 +289,10 @@ export function VerticalTimeline({
               >
                 <span className="relative z-10">
                   {callLabels[cue.type]}
-                  {cue.label && ` · ${cue.label}`}
+                  {(cue.type === "chant"
+                    ? (cue.labels?.ko ?? cue.label)
+                    : cue.label) &&
+                    ` · ${cue.type === "chant" ? (cue.labels?.ko ?? cue.label) : cue.label}`}
                   {cue.type === "singalong" &&
                     cue.lines.map((snapshot) => {
                       const text =

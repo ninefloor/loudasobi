@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { CallSection, LyricLine } from "@/types/lyric";
-import { lyricTextFields } from "./lyricText";
+import { lyricTextFields, singalongTextFields } from "./lyricText";
 
 const time = z.number().finite().min(-3600).max(86400);
 const sourceLine = z.object({
@@ -13,6 +13,13 @@ const common = {
   id: z.string().min(1).max(100),
   type: z.enum(["clap", "chant", "singalong"]),
   label: z.string().max(200),
+  labels: z
+    .object({
+      ko: z.string().max(200),
+      ja: z.string().max(200),
+      en: z.string().max(200),
+    })
+    .optional(),
   lines: z.array(sourceLine).max(500),
   pulseTimes: z.array(time).max(2000),
   textSelections: z
@@ -58,7 +65,10 @@ export type CallCue = CallGuide["cues"][number];
 export function cueTextSelections(
   cue: CallCue,
 ): NonNullable<CallCue["textSelections"]> {
-  const ranges = cue.textSelections ?? [];
+  // Older translation selections remain readable but no longer participate in singing.
+  const ranges = (cue.textSelections ?? []).filter((range) =>
+    singalongTextFields.some((field) => field === range.field),
+  );
   if (!cue.selection || cue.lines.length !== 1) return ranges;
   return [
     {
@@ -78,6 +88,27 @@ export function defaultPulsePattern(
     subdivision: 1,
     firstOffset: 0,
     steps: [0, 1, 2, 3, 4, 5, 6, 7],
+  };
+}
+export function changeCueType(
+  cue: CallCue,
+  type: CallCue["type"],
+  bpm?: number,
+): CallCue {
+  if (cue.type === type) return cue;
+  return {
+    ...cue,
+    type,
+    selection: type === "singalong" ? cue.selection : undefined,
+    textSelections: type === "singalong" ? cue.textSelections : undefined,
+    pulseTimes:
+      type === "singalong" || cue.type === "singalong" ? [] : cue.pulseTimes,
+    pattern:
+      type === "singalong"
+        ? undefined
+        : !cuePulses(cue).length
+          ? defaultPulsePattern(bpm)
+          : cue.pattern,
   };
 }
 export const roundTime = (value: number) => Math.round(value * 10000) / 10000;
@@ -109,6 +140,7 @@ export function snapshotLine(line: LyricLine) {
   return { id: line.id, jp: line.jp, start: line.start, end: line.end };
 }
 export function cuePulses(cue: CallCue): number[] {
+  if (cue.type === "singalong") return [];
   if (!cue.pattern) return cue.pulseTimes;
   const { bpm, subdivision, firstOffset, steps } = cue.pattern;
   const interval = 60 / bpm / subdivision;
@@ -168,6 +200,7 @@ export function resolveGuide(guide: CallGuide, lines: readonly LyricLine[]) {
     if (roundTime(cue.end - cue.start) < 0.01)
       issue = "구간은 최소 0.01초여야 합니다.";
     else if (
+      cue.type !== "singalong" &&
       cue.pattern &&
       (cue.pulseTimes.length ||
         cue.pattern.firstOffset >= cue.end - cue.start ||
@@ -187,7 +220,7 @@ export function resolveGuide(guide: CallGuide, lines: readonly LyricLine[]) {
       issue =
         "펄스는 블록 안에 중복 없이 오름차순으로 지정해 주세요. 최대 2,000개입니다.";
     else if (cue.type !== "singalong" && !pulses.length)
-      issue = "박수·콜의 타이밍을 하나 이상 선택해 주세요.";
+      issue = "박수·챈트의 타이밍을 하나 이상 선택해 주세요.";
     else if (
       cue.type === "singalong" &&
       (!cue.lines.length ||
@@ -224,7 +257,7 @@ export function resolveGuide(guide: CallGuide, lines: readonly LyricLine[]) {
         })
       )
         issue =
-          "떼창 번역·독음 또는 선택 범위가 변경되었습니다. 해당 표시에서 범위를 다시 선택하거나 강조를 해제해 주세요.";
+          "떼창 원문·독음 또는 선택 범위가 변경되었습니다. 해당 표시에서 범위를 다시 선택하거나 강조를 해제해 주세요.";
     }
     if (issue) {
       issues[cue.id] = issue;
@@ -234,13 +267,14 @@ export function resolveGuide(guide: CallGuide, lines: readonly LyricLine[]) {
       id: cue.id,
       type: cue.type,
       label: cue.label || undefined,
+      labels: cue.type === "chant" ? cue.labels : undefined,
       start: cue.start,
       end: cue.end,
       firstLine: first,
       lastLine: first + cue.lines.length - 1,
       pulseTimes: pulses,
       selection: cue.selection ? { ...cue.selection, line: first } : undefined,
-      textSelections: cue.textSelections?.map(
+      textSelections: cueTextSelections(cue).map(
         ({ lineId, field, start, end }) => ({ lineId, field, start, end }),
       ),
     });

@@ -83,6 +83,7 @@ export function AppFrame({
         <Sheet open={compact && mobileOpen} onOpenChange={setMobileOpen}>
           <SheetContent
             side="left"
+            overlayClassName="top-14"
             className="song-sheet gap-0 overflow-hidden p-0"
             closeLabel={t("close")}
             onCloseAutoFocus={(event) => {

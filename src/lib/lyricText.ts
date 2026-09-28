@@ -5,6 +5,7 @@ export const lyricTextFields = [
   "en",
   "enReading",
 ] as const;
+export const singalongTextFields = ["jp", "jpReading", "enReading"] as const;
 export type LyricTextField = (typeof lyricTextFields)[number];
 export const lyricTextLabels: Record<LyricTextField, string> = {
   jp: "일본어 원문",

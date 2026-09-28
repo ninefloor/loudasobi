@@ -4,7 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { callLabels } from "@/components/player/GuidePreview/guideStyles";
 import type { Playback } from "@/components/player/MusicExperience/usePlayback";
-import { moveCue, resizeCue, roundTime, type CallCue } from "@/lib/callGuide";
+import {
+  moveCue,
+  resizeCue,
+  roundTime,
+  changeCueType,
+  type CallCue,
+} from "@/lib/callGuide";
 import { NumberField } from "./NumberField";
 import { PatternEditor } from "./PatternEditor";
 import { SingalongTextEditor } from "./SingalongTextEditor";
@@ -62,18 +68,105 @@ export function CueInspector({
         </Button>
       </div>
       <fieldset disabled={disabled} className="space-y-4">
-        <div className="space-y-1">
-          <Label htmlFor="cue-label">콜 내용 / 설명</Label>
-          <Input
-            id="cue-label"
-            value={cue.label}
-            maxLength={200}
-            onChange={(event) =>
-              onChange({ ...cue, label: event.target.value })
-            }
-            placeholder="예: 어이!"
-          />
+        <div className="space-y-1.5">
+          <p id="cue-type-label" className="text-sm font-medium">
+            콜 종류
+          </p>
+          <div
+            role="group"
+            aria-labelledby="cue-type-label"
+            className="grid grid-cols-3 gap-1 rounded-lg border bg-muted/40 p-1"
+          >
+            {Object.entries(callLabels).map(([value, label]) => (
+              <Button
+                key={value}
+                type="button"
+                size="sm"
+                variant={cue.type === value ? "default" : "ghost"}
+                aria-pressed={cue.type === value}
+                disabled={disabled}
+                onClick={() =>
+                  onChange(
+                    changeCueType(cue, value as CallCue["type"], defaultBpm),
+                  )
+                }
+              >
+                {label}
+              </Button>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            종류를 바꿔도 위치와 연결 가사는 유지됩니다. 떼창에서 다른 종류로
+            바꾸면 선택 강조는 해제됩니다.
+          </p>
         </div>
+        {cue.type === "chant" ? (
+          <div className="space-y-3 rounded-lg border bg-muted/20 p-3">
+            <h3 className="text-sm font-medium">챈트 내용 / 설명</h3>
+            <div
+              className="flex flex-wrap gap-2"
+              role="group"
+              aria-label="챈트 프리셋"
+            >
+              {[
+                { ko: "어이!", ja: "オイ！", en: "Oi!" },
+                { ko: "헤이!", ja: "ヘイ！", en: "Hey!" },
+              ].map((labels) => (
+                <Button
+                  key={labels.ko}
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  disabled={disabled}
+                  onClick={() => onChange({ ...cue, labels, label: labels.ko })}
+                >
+                  {labels.ko}
+                </Button>
+              ))}
+            </div>
+            {(
+              [
+                { locale: "ko", name: "한국어" },
+                { locale: "ja", name: "일본어" },
+                { locale: "en", name: "영어" },
+              ] as const
+            ).map(({ locale, name }) => (
+              <div key={locale} className="space-y-1">
+                <Label htmlFor={`cue-label-${locale}`}>{name}</Label>
+                <Input
+                  id={`cue-label-${locale}`}
+                  lang={locale}
+                  maxLength={200}
+                  value={
+                    cue.labels?.[locale] ?? (locale === "ko" ? cue.label : "")
+                  }
+                  onChange={(event) => {
+                    const labels = {
+                      ...(cue.labels ?? { ko: cue.label, ja: "", en: "" }),
+                      [locale]: event.target.value,
+                    };
+                    onChange({ ...cue, labels, label: labels.ko });
+                  }}
+                />
+              </div>
+            ))}
+            <p className="text-xs text-muted-foreground">
+              사용자가 선택한 언어의 내용을 표시합니다.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-1">
+            <Label htmlFor="cue-label">콜 설명</Label>
+            <Input
+              id="cue-label"
+              value={cue.label}
+              maxLength={200}
+              onChange={(event) =>
+                onChange({ ...cue, label: event.target.value })
+              }
+            />
+          </div>
+        )}
         <div className="grid grid-cols-2 gap-2">
           <NumberField
             label="시작 (재생 초)"
@@ -113,8 +206,10 @@ export function CueInspector({
             ))}
           </div>
           <p className="text-xs text-muted-foreground">
-            이 블록과 내부 펄스만 함께 이동합니다. 곡 전체 싱크는 바뀌지
-            않습니다.
+            {cue.type === "singalong"
+              ? "이 블록만 이동합니다."
+              : "이 블록과 내부 펄스만 함께 이동합니다."}{" "}
+            곡 전체 싱크는 바뀌지 않습니다.
           </p>
         </div>
         {cue.type === "singalong" && (
@@ -125,14 +220,16 @@ export function CueInspector({
             onChange={onChange}
           />
         )}
-        <PatternEditor
-          cue={cue}
-          defaultBpm={defaultBpm}
-          sync={sync}
-          playback={playback}
-          disabled={disabled}
-          onChange={onChange}
-        />
+        {cue.type !== "singalong" && (
+          <PatternEditor
+            cue={cue}
+            defaultBpm={defaultBpm}
+            sync={sync}
+            playback={playback}
+            disabled={disabled}
+            onChange={onChange}
+          />
+        )}
         <Button variant="destructive" size="sm" onClick={onDelete}>
           블록 삭제
         </Button>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { HighlightedText } from "@/components/player/HighlightedText";
 import { cueTextSelections, type CallCue } from "@/lib/callGuide";
 import {
-  lyricTextFields,
+  singalongTextFields,
   lyricTextLabels,
   lyricTextLang,
   type LyricTextField,
@@ -42,8 +42,9 @@ export function SingalongTextEditor({
   return (
     <div className="space-y-4">
       <p className="text-xs text-muted-foreground">
-        연결된 가사의 각 번역·독음에서 떼창할 부분을 드래그하세요. 언어별 범위는
-        독립적이며 자동 번역하지 않습니다. 가사 내용은 MONOASOBI에서 수정합니다.
+        연결된 가사의 일본어 원문·한국어 독음·영어 독음에서 떼창할 부분을
+        드래그하세요. 언어별 범위는 독립적이며 자동 번역하지 않습니다. 가사
+        내용은 MONOASOBI에서 수정합니다.
       </p>
       {!cue.lines.length && (
         <p className="text-sm">
@@ -57,13 +58,54 @@ export function SingalongTextEditor({
             key={snapshot.id}
             className="space-y-3 rounded-lg border p-3"
           >
-            <h3 className="text-sm font-medium">연결 가사 {index + 1}</h3>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-sm font-medium">연결 가사 {index + 1}</h3>
+              <Button
+                type="button"
+                size="xs"
+                variant="outline"
+                disabled={
+                  disabled ||
+                  !line ||
+                  !singalongTextFields.some((field) => line[field]?.trim())
+                }
+                onClick={() => {
+                  if (disabled || !line) return;
+                  const ranges = singalongTextFields.flatMap((field) => {
+                    const text = line[field];
+                    return text?.trim()
+                      ? [
+                          {
+                            lineId: snapshot.id,
+                            field,
+                            start: 0,
+                            end: text.length,
+                            text,
+                          },
+                        ]
+                      : [];
+                  });
+                  onChange({
+                    ...cue,
+                    selection: undefined,
+                    textSelections: [
+                      ...selections.filter(
+                        (range) => range.lineId !== snapshot.id,
+                      ),
+                      ...ranges,
+                    ],
+                  });
+                }}
+              >
+                모든 언어 강조
+              </Button>
+            </div>
             {!line && (
               <p className="text-xs text-destructive">
                 원본 줄이 없습니다. 가사를 다시 연결해 주세요.
               </p>
             )}
-            {lyricTextFields.map((field) => (
+            {singalongTextFields.map((field) => (
               <TextSelectionField
                 key={field}
                 field={field}

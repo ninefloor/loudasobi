@@ -1,5 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { NextIntlClientProvider } from "next-intl";
+import { messages } from "@/i18n/messages";
+import { locales, localeNames, type Locale } from "@/i18n/config";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Label } from "@/components/ui/label";
@@ -45,12 +48,12 @@ export function EditorWorkspace({
   useEditorShortcuts(playback);
   const [selected, setSelected] = useState<string | null>(null);
   const [selectedLines, setSelectedLines] = useState<number[]>([]);
-  const [type, setType] = useState<CallCue["type"]>("clap");
   const [preview, setPreview] = useState(false);
+  const [previewLocale, setPreviewLocale] = useState<Locale>("ko");
   const [loop, setLoop] = useState(false);
   const loopSeeking = useRef(false);
   const cue = guide.cues.find((item) => item.id === selected);
-  const newDuration = type === "singalong" ? 4 : 480 / (music.bpm ?? 120);
+  const newDuration = 480 / (music.bpm ?? 120);
   const { clock, seek } = playback;
   useEffect(() => {
     if (!loop || !cue) return;
@@ -79,7 +82,7 @@ export function EditorWorkspace({
     if (disabled || guide.cues.length >= 500) return;
     const next: CallCue = {
       id: crypto.randomUUID(),
-      type,
+      type: "clap",
       label: "",
       start: roundTime(start),
       end: roundTime(end),
@@ -90,8 +93,7 @@ export function EditorWorkspace({
             .map(snapshotLine)
         : [],
       pulseTimes: [],
-      pattern:
-        type === "singalong" ? undefined : defaultPulsePattern(music.bpm),
+      pattern: defaultPulsePattern(music.bpm),
     };
     onChange({ version: 2, cues: [...guide.cues, next] });
     setSelected(next.id);
@@ -108,6 +110,7 @@ export function EditorWorkspace({
         <Button
           size="xs"
           variant={!preview ? "secondary" : "outline"}
+          aria-pressed={!preview}
           onClick={() => setPreview(false)}
         >
           세로 타임라인
@@ -115,23 +118,24 @@ export function EditorWorkspace({
         <Button
           size="xs"
           variant={preview ? "secondary" : "outline"}
+          aria-pressed={preview}
           onClick={() => setPreview(true)}
         >
           감상 미리보기
         </Button>
-        <Label htmlFor="new-cue-type">추가할 종류</Label>
-        <NativeSelect
-          id="new-cue-type"
-          disabled={disabled}
-          value={type}
-          onChange={(event) => setType(event.target.value as CallCue["type"])}
-        >
-          {Object.entries(callLabels).map(([value, label]) => (
-            <NativeSelectOption key={value} value={value}>
-              {label}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+        {preview && (
+          <NativeSelect
+            aria-label="미리보기 언어"
+            value={previewLocale}
+            onChange={(event) => setPreviewLocale(event.target.value as Locale)}
+          >
+            {locales.map((locale) => (
+              <NativeSelectOption key={locale} value={locale}>
+                {localeNames[locale]}
+              </NativeSelectOption>
+            ))}
+          </NativeSelect>
+        )}
         <Button
           size="xs"
           variant="outline"
@@ -142,7 +146,7 @@ export function EditorWorkspace({
             create(selectedSource[0].start, selectedSource.at(-1)!.end, true)
           }
         >
-          선택 가사로 콜 생성 ({selectedLines.length})
+          선택 가사로 콜 추가 ({selectedLines.length})
         </Button>
         <Button
           size="xs"
@@ -184,20 +188,26 @@ export function EditorWorkspace({
             );
           }}
         >
-          현재 위치에 {type === "singalong" ? "4초" : "8박"} 블록
+          현재 위치에 콜 추가
         </Button>
       </div>
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
         {preview ? (
-          <GuidePreview
-            music={music}
-            track={track}
-            sections={sections}
-            clock={clock}
-            ready={playback.ready}
-            offset={track.sync}
-            onSeek={seek}
-          />
+          <NextIntlClientProvider
+            locale={previewLocale}
+            messages={messages[previewLocale]}
+            timeZone="Asia/Seoul"
+          >
+            <GuidePreview
+              music={music}
+              track={track}
+              sections={sections}
+              clock={clock}
+              ready={playback.ready}
+              offset={track.sync}
+              onSeek={seek}
+            />
+          </NextIntlClientProvider>
         ) : (
           <VerticalTimeline
             lines={track.lyric}
@@ -231,7 +241,9 @@ export function EditorWorkspace({
                 <NativeSelectOption key={item.id} value={item.id}>
                   {(item.start + track.sync).toFixed(2)}초 ·{" "}
                   {callLabels[item.type]} {issues[item.id] ? "⚠" : ""}{" "}
-                  {item.label}
+                  {item.type === "chant"
+                    ? (item.labels?.ko ?? item.label)
+                    : item.label}
                 </NativeSelectOption>
               ))}
             </NativeSelect>
@@ -270,8 +282,8 @@ export function EditorWorkspace({
           ) : (
             <p className="p-4 text-sm text-muted-foreground">
               왼쪽 가사를 선택하거나 오른쪽 빈 시간 구간을 드래그해 콜 블록을
-              만드세요. 블록을 선택하면 박자 패턴과 ±0.01초 위치 조절이
-              표시됩니다.
+              만드세요. 오른쪽에서 종류를 바꾸고 박자 패턴과 ±0.01초 위치 조절을
+              설정할 수 있습니다.
             </p>
           )}
         </ScrollArea>

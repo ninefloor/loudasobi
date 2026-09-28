@@ -1,5 +1,19 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import {
+  ArrowLeft,
+  Copy,
+  Redo2,
+  Save,
+  SlidersHorizontal,
+  Undo2,
+} from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { EditorThemeMenu } from "./CallGuideEditor/EditorThemeMenu";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -124,97 +138,138 @@ export function CallGuideEditor({
         }
       }}
     >
-      <header className="flex shrink-0 flex-wrap items-center gap-2 border-b px-4 py-2">
-        <Button size="sm" variant="ghost" disabled={busy} onClick={leave}>
-          ← 곡 설정
-        </Button>
-        <h1 className="text-sm font-semibold">
-          {saved.music.title} · 콜 타임라인
-        </h1>
-        <Badge variant="outline">
-          {saved.publish ? "공개 곡" : "비공개 곡"}
-        </Badge>
-        <span className="text-xs text-muted-foreground">
-          {readOnly ? "열람 전용" : dirty ? "저장하지 않은 변경" : "저장됨"}
-        </span>
+      <header className="flex shrink-0 flex-wrap items-center gap-3 border-b bg-card px-4 py-3">
         <Button
-          size="xs"
-          variant="outline"
-          disabled={readOnly || busy || !history.canUndo}
-          onClick={history.undo}
+          size="icon"
+          variant="ghost"
+          aria-label="곡 설정으로 돌아가기"
+          title="곡 설정으로 돌아가기"
+          disabled={busy}
+          onClick={leave}
         >
-          실행 취소
+          <ArrowLeft className="size-4" />
         </Button>
-        <Button
-          size="xs"
-          variant="outline"
-          disabled={readOnly || busy || !history.canRedo}
-          onClick={history.redo}
-        >
-          다시 실행
-        </Button>
-        <Button
-          size="xs"
-          variant="outline"
-          onClick={async () => {
-            try {
-              await navigator.clipboard.writeText(
-                JSON.stringify({ guide, syncOffset }, null, 2),
-              );
-              setMessage("콜·싱크 초안을 복사했습니다.");
-            } catch {
-              setMessage("클립보드 권한을 확인해 주세요.");
-            }
-          }}
-        >
-          초안 복사
-        </Button>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <h1 className="truncate text-base font-semibold">
+              {saved.music.title}
+            </h1>
+            <Badge variant="outline">
+              {saved.publish ? "공개 곡" : "비공개 곡"}
+            </Badge>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground">
+            콜 편집 <span aria-hidden>·</span>{" "}
+            {readOnly
+              ? "열람 전용"
+              : dirty
+                ? "저장하지 않은 변경"
+                : "모든 변경 저장됨"}
+          </p>
+        </div>
+        <div className="flex items-center gap-1 border-r pr-3">
+          <Button
+            size="icon"
+            variant="ghost"
+            aria-label="실행 취소"
+            title="실행 취소 · ⌘/Ctrl+Z"
+            disabled={readOnly || busy || !history.canUndo}
+            onClick={history.undo}
+          >
+            <Undo2 className="size-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            aria-label="다시 실행"
+            title="다시 실행 · ⌘/Ctrl+Shift+Z"
+            disabled={readOnly || busy || !history.canRedo}
+            onClick={history.redo}
+          >
+            <Redo2 className="size-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            aria-label="초안 복사"
+            title="초안 복사"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(
+                  JSON.stringify({ guide, syncOffset }, null, 2),
+                );
+                setMessage("콜·싱크 초안을 복사했습니다.");
+              } catch {
+                setMessage("클립보드 권한을 확인해 주세요.");
+              }
+            }}
+          >
+            <Copy className="size-4" />
+          </Button>
+        </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button size="sm" variant="outline">
+              <SlidersHorizontal className="size-4" />
+              싱크 보정 {syncOffset >= 0 ? "+" : ""}
+              {syncOffset.toFixed(2)}초
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            align="end"
+            className="w-80 space-y-2 p-4"
+            aria-label="전체 싱크 보정"
+          >
+            <h2 className="font-semibold">전체 싱크 보정</h2>
+            <fieldset
+              disabled={readOnly || busy}
+              className="flex flex-wrap items-end gap-2"
+            >
+              <div className="w-44">
+                <NumberField
+                  label="가사 싱크 추가 보정 (초)"
+                  value={syncOffset}
+                  min={-3600}
+                  max={3600}
+                  onChange={(value) =>
+                    history.update((draft) => ({ ...draft, syncOffset: value }))
+                  }
+                />
+              </div>
+              {[-0.1, -0.01, 0.01, 0.1].map((delta) => (
+                <Button
+                  key={delta}
+                  size="xs"
+                  variant="outline"
+                  disabled={Math.abs(syncOffset + delta) > 3600}
+                  onClick={() =>
+                    history.update((draft) => ({
+                      ...draft,
+                      syncOffset: roundTime(draft.syncOffset + delta),
+                    }))
+                  }
+                >
+                  {delta > 0 ? "+" : ""}
+                  {delta.toFixed(2)}
+                </Button>
+              ))}
+              <span className="pb-1 text-xs text-muted-foreground">
+                원본 {saved.sourceSync}초 + 보정 = {roundTime(track.sync)}초 ·
+                가사와 콜 전체에 적용 / 개별 블록 위치 조절과 별개
+              </span>
+            </fieldset>
+          </PopoverContent>
+        </Popover>
+        <EditorThemeMenu />
         <Button
           size="sm"
-          className="ml-auto"
           disabled={readOnly || busy || !dirty || invalid}
           onClick={save}
         >
+          <Save className="size-4" />
           {busy ? "저장 중…" : "전체 저장"}
         </Button>
       </header>
-      <fieldset
-        disabled={readOnly || busy}
-        className="flex shrink-0 flex-wrap items-end gap-2 border-b px-4 py-2"
-      >
-        <div className="w-44">
-          <NumberField
-            label="가사 싱크 추가 보정 (초)"
-            value={syncOffset}
-            min={-3600}
-            max={3600}
-            onChange={(value) =>
-              history.update((draft) => ({ ...draft, syncOffset: value }))
-            }
-          />
-        </div>
-        {[-0.1, -0.01, 0.01, 0.1].map((delta) => (
-          <Button
-            key={delta}
-            size="xs"
-            variant="outline"
-            disabled={Math.abs(syncOffset + delta) > 3600}
-            onClick={() =>
-              history.update((draft) => ({
-                ...draft,
-                syncOffset: roundTime(draft.syncOffset + delta),
-              }))
-            }
-          >
-            {delta > 0 ? "+" : ""}
-            {delta.toFixed(2)}
-          </Button>
-        ))}
-        <span className="pb-1 text-xs text-muted-foreground">
-          원본 {saved.sourceSync}초 + 보정 = {roundTime(track.sync)}초 · 가사와
-          콜 전체에 적용 / 개별 블록 위치 조절과 별개
-        </span>
-      </fieldset>
       {(message || invalid || !saved.music.youtubeId) && (
         <p role="status" className="shrink-0 border-b px-4 py-2 text-xs">
           {message ||

@@ -27,6 +27,7 @@ export interface CallSection {
   firstLine: number;
   lastLine: number;
   label?: string;
+  labels?: Record<LyricLocale, string>;
   // Seconds on the lyric timeline; track sync is added when reading player time.
   pulseTimes: number[];
   // Optional selected text offsets, not pre-split lyric segments.

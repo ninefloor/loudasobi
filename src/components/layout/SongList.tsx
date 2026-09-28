@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useLayoutEffect, useRef } from "react";
 import type { CatalogEntry } from "@/types/catalog";
 import { Badge } from "@/components/ui/badge";
+import { FanLightBadge } from "@/components/common/FanLightBadge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import type { SidebarLayout } from "@/lib/sidebarOrder";
@@ -115,7 +116,7 @@ export function SongList({
                 title={`${music.title} — ${music.korTitle} / ${music.enTitle}`}
                 onClick={() => onSelect(music.id)}
                 className={cn(
-                  "grid w-full cursor-pointer grid-cols-[72px_minmax(0,1fr)] items-center gap-2.5 border-l-2 border-transparent px-4 py-2 text-left transition-colors duration-(--motion-fast) hover:bg-accent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring max-[359px]:grid-cols-1",
+                  "grid w-full cursor-pointer grid-cols-[72px_minmax(0,1fr)_auto] items-center gap-2.5 border-l-2 border-transparent px-4 py-2 text-left transition-colors duration-(--motion-fast) hover:bg-accent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring max-[359px]:grid-cols-[minmax(0,1fr)_auto]",
                   selected &&
                     "border-l-primary bg-accent text-accent-foreground",
                   isPending && "text-muted-foreground",
@@ -148,12 +149,13 @@ export function SongList({
                       {locale === "ko" ? music.korTitle : music.enTitle}
                     </span>
                   )}
-                  {isPending && (
-                    <span>
-                      <Badge variant="outline">{t("pending")}</Badge>
-                    </span>
-                  )}
+                  {isPending && <Badge variant="outline">{t("pending")}</Badge>}
                 </span>
+                {music.fanLightColor && (
+                  <span className="max-w-24 justify-self-end">
+                    <FanLightBadge color={music.fanLightColor} compact />
+                  </span>
+                )}
               </button>
             );
           })}
